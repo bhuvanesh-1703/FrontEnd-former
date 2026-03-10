@@ -1,0 +1,97 @@
+/* ============================================================
+   Farm Aura — App Layout & Polish
+   ============================================================ */
+
+.App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #FFFFFF;
+}
+
+.App main {
+    flex: 1;
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 52px;
+    height: 52px;
+    background-color: #2D5A27;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 2px;
+}
+
+.scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+    background-color: #43A047;
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+/* Custom Hamburger Toggle */
+.custom-toggler {
+    border: none !important;
+    padding: 8px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.hamburger-box {
+    width: 24px;
+    height: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hamburger-box .bar {
+    width: 100%;
+    height: 2px;
+    background-color: #2D5A27;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hamburger-box .bar.mid {
+    width: 70%;
+}
+
+.custom-toggler[aria-expanded="true"] .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+}
+
+.custom-toggler[aria-expanded="true"] .bar.mid {
+    opacity: 0;
+    width: 0;
+}
+
+.custom-toggler[aria-expanded="true"] .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -6px);
+}
+
+/* Page fade-in */
+.home-page {
+    animation: luxeFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes luxeFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

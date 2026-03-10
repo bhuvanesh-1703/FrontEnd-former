@@ -1,0 +1,586 @@
+/* ============================================================
+   Farm Aura — 10/10 Premium Footer
+   Font: Poppins (consistent with Navbar)
+   Color palette: deep forest greens on near-black bg
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* ── Root / Wrapper ──────────────────────────────────────────── */
+.footer-premium {
+  background-color: #101f10;
+  color: #c8d9c8;
+  font-family: 'Poppins', 'Inter', -apple-system, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ============================================================
+   SECTION 1 — Newsletter Strip
+   ============================================================ */
+.footer-newsletter-strip {
+  background: #1b4d1e;
+  padding: 48px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Soft radial glow behind the strip */
+.footer-newsletter-strip::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -80px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(67, 160, 71, 0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.newsletter-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.newsletter-text {
+  flex: 1 1 300px;
+}
+
+.newsletter-heading {
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1.3;
+}
+
+.nl-leaf {
+  color: #81c784;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.newsletter-sub {
+  font-size: 0.9rem;
+  color: #a5c9a5;
+  margin: 0;
+  font-weight: 400;
+}
+
+.newsletter-form {
+  flex: 1 1 380px;
+}
+
+.nl-input-wrap {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  padding: 6px 6px 6px 18px;
+  gap: 10px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(6px);
+}
+
+.nl-input-wrap:focus-within {
+  border-color: #66bb6a;
+  box-shadow: 0 0 0 3px rgba(102, 187, 106, 0.2);
+}
+
+.nl-input-icon {
+  color: #81c784;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.nl-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-family: 'Poppins', sans-serif;
+  min-width: 0;
+}
+
+.nl-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.nl-btn {
+  background: #2e7d32;
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 22px;
+  font-size: 0.87rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  letter-spacing: 0.3px;
+}
+
+.nl-btn:hover:not(:disabled) {
+  background: #388e3c;
+  box-shadow: 0 4px 14px rgba(46, 125, 50, 0.4);
+  transform: translateY(-1px);
+}
+
+.nl-btn--success {
+  background: #1b5e20 !important;
+  cursor: default;
+}
+
+/* ============================================================
+   SECTION 2 — Trust Badges Strip
+   ============================================================ */
+.footer-trust-strip {
+  background-color: #152015;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 20px 0;
+}
+
+.trust-badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 28px;
+  color: #a0b8a0;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.trust-badge:hover {
+  color: #c8e6c9;
+}
+
+.tb-icon {
+  color: #66bb6a;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.trust-divider {
+  width: 1px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   SECTION 3 — Main Footer Body
+   ============================================================ */
+.footer-main-tier {
+  padding: 80px 0 60px;
+  position: relative;
+}
+
+/* Subtle grain texture overlay */
+.footer-grain-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+  opacity: 0.025;
+  pointer-events: none;
+}
+
+/* ── Brand Block ───────────────────────────────────────────── */
+.footer-brand-premium {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.footer-brand-premium .brand-logo-box {
+  background: #2e7d32;
+  color: #ffffff;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.4);
+}
+
+.leaf-icon {
+  font-size: 1.3rem;
+}
+
+.footer-brand-premium .brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-brand-premium .brand-name {
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.footer-brand-premium .brand-name .terra { color: #ffffff; }
+.footer-brand-premium .brand-name .fresh { color: #66bb6a; }
+
+.brand-tagline {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #7a9a7a;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin: 4px 0 0;
+}
+
+/* ── Manifesto / Description ───────────────────────────────── */
+.footer-manifesto {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: #7a9a7a;
+  margin-bottom: 24px;
+  max-width: 360px;
+}
+
+/* ── Contact Info List ─────────────────────────────────────── */
+.footer-contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-contact-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.87rem;
+  color: #8aaa8a;
+  line-height: 1.5;
+}
+
+.contact-icon {
+  color: #66bb6a;
+  font-size: 0.85rem;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.footer-contact-list a {
+  color: #8aaa8a;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.footer-contact-list a:hover {
+  color: #c8e6c9;
+}
+
+/* ── Social Pills ──────────────────────────────────────────── */
+.premium-socials {
+  display: flex;
+  gap: 10px;
+}
+
+.social-pill {
+  width: 38px;
+  height: 38px;
+  background: #1e3c1e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #85ba85;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.social-pill:hover {
+  background: #2e7d32;
+  color: #ffffff;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(46, 125, 50, 0.35);
+  border-color: transparent;
+}
+
+/* ── Column Titles ─────────────────────────────────────────── */
+.column-title {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  margin-bottom: 28px;
+  position: relative;
+  padding-bottom: 14px;
+}
+
+.column-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 28px;
+  height: 2px;
+  background: linear-gradient(90deg, #66bb6a, #2e7d32);
+  border-radius: 2px;
+}
+
+/* ── Premium Links ─────────────────────────────────────────── */
+.premium-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.premium-links a {
+  color: #7a9a7a;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.premium-links a::before {
+  content: '›';
+  font-size: 1.1rem;
+  line-height: 1;
+  color: #66bb6a;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: all 0.25s ease;
+  margin-right: 0;
+  display: inline-block;
+}
+
+.premium-links a:hover {
+  color: #c8e6c9;
+  padding-left: 18px;
+}
+
+.premium-links a:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+  position: absolute;
+  left: 0;
+}
+
+/* ============================================================
+   SECTION 4 — Bottom Bar
+   ============================================================ */
+.footer-bottom-luxe {
+  background-color: #0b160b;
+  padding: 22px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.bottom-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.copy-text {
+  font-size: 0.82rem;
+  color: #5a7a5a;
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+.legal-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legal-links a {
+  font-size: 0.82rem;
+  color: #5a7a5a;
+  text-decoration: none;
+  transition: color 0.25s ease;
+  font-weight: 400;
+}
+
+.legal-links a:hover {
+  color: #a5c9a5;
+}
+
+.dot {
+  color: #2e4a2e;
+  font-size: 0.8rem;
+}
+
+/* ============================================================
+   Scroll-To-Top Button
+   ============================================================ */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 44px;
+  height: 44px;
+  background: #2e7d32;
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 4px 16px rgba(46, 125, 50, 0.4);
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.scroll-top-btn--visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.scroll-top-btn:hover {
+  background: #388e3c;
+  box-shadow: 0 8px 24px rgba(46, 125, 50, 0.5);
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* ============================================================
+   RESPONSIVE — Tablet (≤ 991px)
+   ============================================================ */
+@media (max-width: 991px) {
+  .footer-main-tier {
+    padding: 60px 0 40px;
+  }
+
+  .newsletter-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .newsletter-form {
+    width: 100%;
+  }
+
+  .trust-badges {
+    gap: 0;
+    justify-content: flex-start;
+  }
+
+  .trust-badge {
+    padding: 8px 16px;
+  }
+
+  .trust-divider {
+    display: none;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — Mobile (≤ 575px)
+   ============================================================ */
+@media (max-width: 575px) {
+  .footer-newsletter-strip {
+    padding: 36px 0;
+  }
+
+  .newsletter-heading {
+    font-size: 1.2rem;
+  }
+
+  .nl-input-wrap {
+    flex-direction: column;
+    border-radius: 14px;
+    padding: 14px 16px;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .nl-input-icon {
+    display: none;
+  }
+
+  .nl-input {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .nl-btn {
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+  }
+
+  .trust-badges {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .footer-main-tier {
+    padding: 48px 0 36px;
+  }
+
+  .footer-manifesto {
+    max-width: 100%;
+  }
+
+  .bottom-flex {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .scroll-top-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
+}

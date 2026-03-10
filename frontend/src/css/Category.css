@@ -1,0 +1,146 @@
+/* ============================================================
+   Farm Aura — Category Styles
+   ============================================================ */
+
+.category-section {
+    padding: 100px 0;
+    background-color: #F8F9FA;
+}
+
+.category-header {
+    margin-bottom: 60px;
+}
+
+.category-section-badge {
+    display: inline-block;
+    color: #1b5e20;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+}
+
+.category-section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+}
+
+.category-section-subtitle {
+    font-family: 'Inter', sans-serif;
+    color: #556055;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.category-card-link {
+    text-decoration: none !important;
+}
+
+.category-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    height: 100%;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+}
+
+.category-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 40px rgba(27, 94, 32, 0.1);
+    border-color: rgba(27, 94, 32, 0.2);
+    outline: 1px solid rgba(27, 94, 32, 0.1);
+}
+
+.category-image-container {
+    position: relative;
+    aspect-ratio: 16/11;
+    overflow: hidden;
+}
+
+.category-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.category-card:hover .category-image {
+    transform: scale(1.12);
+}
+
+.category-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.category-card:hover .category-overlay {
+    opacity: 1;
+}
+
+.category-info {
+    padding: 30px;
+}
+
+.category-name {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #1A1A1A;
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+.category-card:hover .category-name {
+    color: #1b5e20;
+}
+
+.category-description {
+    font-family: 'Inter', sans-serif;
+    color: #667066;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.category-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    padding-top: 20px;
+}
+
+.product-count {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #1b5e20;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.explore-arrow {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    font-size: 1.2rem;
+}
+
+.category-card:hover .explore-arrow {
+    transform: translateX(6px);
+}

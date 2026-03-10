@@ -1,0 +1,33 @@
+/* ============================================================
+   Farm Aura — Home Styles
+   ============================================================ */
+
+.home-page {
+  background-color: #F9FBF9;
+}
+
+.hero-section {
+  padding: 80px 0;
+  background-color: #FFFFFF;
+  text-align: center;
+}
+
+.hero-section h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  color: #2D5A27;
+  margin-bottom: 16px;
+  letter-spacing: -1px;
+  line-height: 1.1;
+}
+
+.product-showcase {
+  padding: 40px 0;
+}
+
+.featured-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+}

@@ -1,0 +1,147 @@
+/* Vendor Dashboard Specific Styles */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: var(--vendor-white);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: var(--vendor-shadow);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid transparent;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--vendor-primary-light);
+}
+
+.stat-icon-wrapper {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--vendor-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--vendor-text-main);
+}
+
+/* Dashboard Content Tables */
+.dashboard-sections-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.dashboard-section-card {
+  background: var(--vendor-white);
+  border-radius: 16px;
+  box-shadow: var(--vendor-shadow);
+  padding: 24px;
+  min-height: 400px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--vendor-text-main);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.view-all-btn {
+  background: var(--vendor-primary);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.dashboard-table {
+  width: 100%;
+}
+
+.dashboard-table th {
+  text-align: left;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--vendor-text-muted);
+  font-weight: 700;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--vendor-border);
+  background: var(--vendor-bg);
+}
+
+.dashboard-table td {
+  padding: 16px 10px;
+  font-size: 0.9rem;
+  color: var(--vendor-text-main);
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.status-approved-pill {
+  background: #E8F5E9;
+  color: #2E7D32;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status-pending-pill {
+  background: #FFF3E0;
+  color: #EF6C00;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  color: var(--vendor-text-muted);
+  text-align: center;
+}

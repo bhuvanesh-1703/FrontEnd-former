@@ -1,0 +1,197 @@
+/* Users management styles - Mirrored from Product.css */
+
+.users-manager-container {
+  width: 100%;
+}
+
+.users-manager-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.users-manager-header h2 {
+  margin: 0;
+  color: #333;
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.5px;
+}
+
+.add-btn {
+  background-color: #2e7d32;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.add-btn:hover {
+  background-color: #1b5e20;
+}
+
+/* Search Bar in Header Area */
+.search-container {
+  margin-bottom: 20px;
+}
+
+.search-container input {
+  padding: 8px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 250px;
+  font-size: 14px;
+}
+
+.search-container input:focus {
+  border-color: #2e7d32;
+  outline: none;
+}
+
+/* Form Styles */
+.user-form-container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  max-width: 600px;
+}
+
+.user-form-container h3 {
+  margin-bottom: 25px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #444;
+  font-size: 13px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #2e7d32;
+  outline: none;
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.submit-btn {
+  background-color: #2e7d32;
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  flex: 1;
+}
+
+.cancel-btn {
+  background-color: #ffffff;
+  color: #666;
+  border: 1px solid #ccc;
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  flex: 1;
+}
+
+/* Table Styles */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.users-table th {
+  background-color: #f8f9fa;
+  color: #333;
+  padding: 15px 20px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  border-bottom: 2px solid #2e7d32;
+  text-transform: uppercase;
+}
+
+.users-table td {
+  padding: 15px 20px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  color: #555;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.action-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.edit-btn {
+  background-color: transparent;
+  color: #2e7d32;
+  border: 1px solid #2e7d32;
+}
+
+.edit-btn:hover {
+  background-color: #2e7d32;
+  color: #fff;
+}
+
+.delete-btn {
+  background-color: transparent;
+  color: #d32f2f;
+  border: 1px solid #d32f2f;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
+  color: #fff;
+}

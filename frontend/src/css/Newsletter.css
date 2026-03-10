@@ -1,0 +1,58 @@
+/* 
+  FARM AURA - NEWSLETTER STYLES (Beginner Friendly)
+  -------------------------------------------------
+*/
+
+.newsletter-section {
+  padding: 60px 0;
+  background-color: #2D5A27; /* Dark Forest Green */
+  color: #ffffff;
+  text-align: center;
+}
+
+.newsletter-card {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.newsletter-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+/* Simple side-by-side form */
+.newsletter-form-inline {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.newsletter-input {
+  flex: 1;
+  background-color: #386b32; /* Solid slightly lighter green */
+  border: 1px solid #4a8243; /* Solid border */
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 12px 15px;
+}
+
+.newsletter-input:focus {
+  outline: none;
+  background-color: #ffffff;
+  color: #333;
+}
+
+.newsletter-btn {
+  background-color: #ffffff;
+  color: #2D5A27;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.newsletter-btn:hover {
+  background-color: #f0f0f0;
+}

@@ -1,0 +1,24 @@
+
+
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.admin-body {
+    display: flex;
+    flex: 1;
+}
+
+.sidebar-container {
+    width: 250px;
+    background-color: #ffffff;
+    border-right: 1px solid #e0e0e0;
+}
+
+.content-container {
+    flex: 1;
+    padding: 30px;
+    background-color: #f8f9fa; 
+}

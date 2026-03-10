@@ -1,0 +1,115 @@
+.messages-container {
+    padding: 1.5rem;
+    background-color: #f8fafc;
+    min-height: calc(100vh - 80px);
+}
+
+/* Reusing common admin styles */
+.messages-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.messages-header h2 {
+    margin: 0;
+    color: #333;
+    font-weight: 700;
+    font-size: 26px;
+}
+
+.table-responsive {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.products-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.products-table th {
+    background-color: #f8f9fa;
+    color: #333;
+    padding: 15px 20px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 13px;
+    border-bottom: 2px solid #2e7d32;
+    text-transform: uppercase;
+}
+
+.products-table td {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    color: #555;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.action-btns {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-btn, .delete-btn {
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 12px;
+    transition: all 0.2s;
+    border: 1px solid;
+}
+
+.edit-btn {
+    background-color: transparent;
+    color: #2e7d32;
+    border-color: #2e7d32;
+}
+
+.edit-btn:hover {
+    background-color: #2e7d32;
+    color: #fff;
+}
+
+.delete-btn {
+    background-color: transparent;
+    color: #d32f2f;
+    border-color: #d32f2f;
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f;
+    color: #fff;
+}
+
+/* Stats section integration */
+.orders-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.stat-card {
+    background: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-card span {
+    font-size: 11px;
+    color: #64748b;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.stat-card strong {
+    font-size: 18px;
+    color: #2e7d32;
+}

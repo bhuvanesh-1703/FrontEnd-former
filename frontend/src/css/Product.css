@@ -1,0 +1,42 @@
+/* QTY */
+.luxury-qty-pill {
+  display: flex;
+  align-items: center;
+  background: #f1f3f1;
+  border-radius: 14px;
+  padding: 4px;
+}
+
+.qty-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  border: none;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #1b5e20;
+}
+
+.qty-btn:hover {
+  background: #e8f5e9;
+}
+
+.qty-val {
+  width: 32px;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+}
+
+/* ACTION ROW */
+.p-card-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.luxury-cart-btn {
+  flex: 1;
+}

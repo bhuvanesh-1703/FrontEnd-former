@@ -1,0 +1,205 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
+:root {
+  --auth-bg: #f5f7fa;
+  --auth-card: #ffffff;
+  --auth-text: #0f172a;
+  --auth-muted: #64748b;
+  --auth-border: #d0d7e2;
+  --auth-brand: #2d6a4f;
+  --auth-brand-2: #52b788;
+  --auth-danger: #dc2626;
+  --auth-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+
+/* Shared styles for both Login and Register pages */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--auth-bg);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.auth-card {
+  width: 420px;
+  max-width: 100%;
+  padding: 40px 36px;
+  border-radius: 18px;
+  background: var(--auth-card);
+  border: 1px solid rgba(208, 215, 226, 0.7);
+  box-shadow: var(--auth-shadow);
+  color: var(--auth-text);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.auth-card::before {
+  content: "";
+  display: block;
+  height: 4px;
+  width: 64px;
+  border-radius: 999px;
+  background: var(--auth-brand);
+  margin-bottom: 18px;
+}
+
+.auth-card h2 {
+  margin: 0 0 6px;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.auth-subtitle {
+  margin: 0 0 24px;
+  color: var(--auth-muted);
+  font-size: 14px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.auth-group {
+  margin-bottom: 16px;
+}
+
+.auth-group label {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  line-height: 1.4;
+}
+
+.auth-group input {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--auth-border);
+  background: #ffffff;
+  color: #111827;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease,
+    transform 0.1s ease;
+}
+
+.auth-group input::placeholder {
+  color: #9ca3af;
+}
+
+.auth-group input:focus-visible {
+  border-color: var(--auth-brand-2);
+  box-shadow: 0 0 0 1px var(--auth-brand-2),
+    0 0 0 4px rgba(82, 183, 136, 0.22);
+}
+
+.auth-btn {
+  width: 100%;
+  margin-top: 6px;
+  padding: 12px 14px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--auth-brand);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.15s ease, filter 0.15s ease,
+    opacity 0.15s ease;
+  box-shadow: 0 10px 22px rgba(45, 106, 79, 0.22);
+}
+
+.auth-btn:hover {
+  filter: brightness(0.98);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(45, 106, 79, 0.26);
+}
+
+.auth-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 8px 18px rgba(45, 106, 79, 0.2);
+}
+
+.auth-btn:disabled,
+.auth-btn[disabled] {
+  opacity: 0.65;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.auth-footer {
+  margin-top: 18px;
+  color: var(--auth-muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.auth-footer a {
+  color: var(--auth-brand);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+.error {
+  color: var(--auth-danger);
+  font-size: 12px;
+  margin-top: 6px;
+  display: block;
+  line-height: 1.35;
+}
+
+/* Make browser autofill look consistent */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #111827;
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset;
+  transition: background-color 9999s ease-out 0s;
+}
+
+@media (max-width: 576px) {
+  .auth-container {
+    padding: 18px;
+  }
+
+  .auth-card {
+    padding: 28px 22px;
+    border-radius: 16px;
+  }
+
+  .auth-card h2 {
+    font-size: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-card {
+    animation: none;
+  }
+
+  .auth-btn,
+  .auth-group input {
+    transition: none;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

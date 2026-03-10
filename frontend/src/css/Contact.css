@@ -1,0 +1,423 @@
+/* ============================================================
+   Farm Aura — Contact Us Page — Premium 10/10 Styles
+   Font: Poppins | Theme: forest green on near-white
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap');
+
+/* ── Wrapper ─────────────────────────────────────────────── */
+.contact-page-wrapper {
+  font-family: 'Poppins', 'Inter', -apple-system, sans-serif;
+  background: #f8fbf8;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.contact-hero {
+  position: relative;
+  background: linear-gradient(135deg, #0d2b0d 0%, #1a4a1a 55%, #0f350f 100%);
+  padding: 100px 0 90px;
+  overflow: hidden;
+}
+
+.contact-hero::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -60px;
+  width: 440px;
+  height: 440px;
+  background: radial-gradient(circle, rgba(102, 187, 106, 0.18) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.contact-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: 10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(46, 125, 50, 0.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.contact-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+  opacity: 0.025;
+  pointer-events: none;
+}
+
+.contact-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact-eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #81c784;
+  background: rgba(129, 199, 132, 0.12);
+  border: 1px solid rgba(129, 199, 132, 0.25);
+  border-radius: 50px;
+  padding: 5px 16px;
+  margin-bottom: 22px;
+}
+
+.contact-hero-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.15;
+  margin-bottom: 18px;
+}
+
+.contact-hero-accent {
+  color: #81c784;
+}
+
+.contact-hero-sub {
+  font-size: 1rem;
+  color: #a5c9a5;
+  line-height: 1.75;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* ============================================================
+   MAIN SECTION
+   ============================================================ */
+.contact-main {
+  padding: 80px 0 100px;
+}
+
+/* ── Info Panel ───────────────────────────────────────────── */
+.contact-info-panel {
+  position: sticky;
+  top: 100px;
+}
+
+.info-panel-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #1a2e1a;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.info-panel-sub {
+  font-size: 0.9rem;
+  color: #7a9a7a;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.contact-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+.contact-info-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: #ffffff;
+  border: 1px solid #e0ece0;
+  border-radius: 14px;
+  padding: 18px 20px;
+  transition: all 0.3s ease;
+  border-left: 3px solid var(--card-accent, #2e7d32);
+}
+
+.contact-info-card:hover {
+  box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+  transform: translateX(4px);
+}
+
+.cic-icon-wrap {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--card-accent, #2e7d32);
+  transition: all 0.3s ease;
+}
+
+.contact-info-card:hover .cic-icon-wrap {
+  background: var(--card-accent, #2e7d32);
+  color: #ffffff;
+}
+
+.cic-text {
+  flex: 1;
+}
+
+.cic-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #1a2e1a;
+  margin-bottom: 5px;
+}
+
+.cic-line {
+  font-size: 0.88rem;
+  color: #7a9a7a;
+  line-height: 1.6;
+  margin: 0;
+  display: block;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+a.cic-line:hover {
+  color: #2e7d32;
+}
+
+/* Social Links */
+.contact-social-block {
+  margin-top: 8px;
+}
+
+.social-block-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #1a2e1a;
+  margin-bottom: 16px;
+}
+
+.contact-socials {
+  display: flex;
+  gap: 10px;
+}
+
+.contact-social-pill {
+  width: 40px;
+  height: 40px;
+  background: #f0f8f0;
+  border: 1px solid #daeeda;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2e7d32;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.contact-social-pill:hover {
+  background: #2e7d32;
+  color: #ffffff;
+  border-color: transparent;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(46, 125, 50, 0.3);
+}
+
+/* ── Contact Form ─────────────────────────────────────────── */
+.contact-form-card {
+  background: #ffffff;
+  border: 1px solid #e0ece0;
+  border-radius: 20px;
+  padding: 48px 44px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+}
+
+.form-card-header {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #eaf2ea;
+}
+
+.form-card-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #1a2e1a;
+  margin-bottom: 6px;
+}
+
+.form-card-sub {
+  font-size: 0.85rem;
+  color: #9aaa9a;
+  margin: 0;
+}
+
+.req-star {
+  color: #e53935;
+  font-weight: 700;
+}
+
+/* Success Banner */
+.form-success-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f0faf0;
+  border: 1px solid #a5d6a7;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  color: #2e7d32;
+  font-size: 0.9rem;
+  font-weight: 500;
+  animation: fadeSlideIn 0.4s ease;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.success-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+/* Form Fields */
+.form-field {
+  margin-bottom: 22px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3a5a3a;
+  letter-spacing: 0.3px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.form-input {
+  width: 100%;
+  background: #f7fbf7;
+  border: 1.5px solid #daeeda;
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-size: 0.9rem;
+  font-family: 'Poppins', sans-serif;
+  color: #1a2e1a;
+  outline: none;
+  transition: all 0.3s ease;
+  appearance: none;
+  display: block;
+}
+
+.form-input::placeholder {
+  color: #b0c8b0;
+  font-weight: 400;
+}
+
+.form-input:focus {
+  background: #ffffff;
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.65;
+}
+
+/* Submit Button */
+.contact-submit-btn {
+  width: 100%;
+  background: #2e7d32;
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  padding: 15px 32px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: all 0.35s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 8px;
+  box-shadow: 0 4px 16px rgba(46, 125, 50, 0.3);
+}
+
+.contact-submit-btn:hover:not(:disabled) {
+  background: #388e3c;
+  box-shadow: 0 8px 28px rgba(46, 125, 50, 0.45);
+  transform: translateY(-2px);
+}
+
+.contact-submit-btn:disabled {
+  opacity: 0.75;
+  cursor: default;
+}
+
+.contact-submit-btn--loading {
+  opacity: 0.85;
+}
+
+/* Spinner */
+.btn-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid rgba(255,255,255,0.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 991px) {
+  .contact-info-panel {
+    position: static;
+  }
+}
+
+@media (max-width: 767px) {
+  .contact-form-card {
+    padding: 32px 24px;
+  }
+
+  .contact-hero {
+    padding: 80px 0 60px;
+  }
+}
+
+@media (max-width: 575px) {
+  .contact-form-card {
+    padding: 28px 20px;
+    border-radius: 12px;
+  }
+}
