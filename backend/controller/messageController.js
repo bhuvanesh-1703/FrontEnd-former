@@ -12,12 +12,12 @@ const getMessages = async (req, res) => {
 
 const postMessage = async (req, res) => {
   try {
-    const { name, email, phone, message } = req.body;
+    const { name, email, phone, message, userId } = req.body;
     
    
     await db.query(
-      "INSERT INTO messages (name, email, phone, message) VALUES (?, ?, ?, ?)",
-      [name, email, phone, message]
+      "INSERT INTO messages (name, email, phone, message, user_id) VALUES (?, ?, ?, ?, ?)",
+      [name, email, phone, message, userId || null]
     );
 
   
@@ -50,4 +50,24 @@ const deleteMessage = async (req, res) => {
   }
 };
 
-module.exports = { getMessages, postMessage, deleteMessage };
+const replyToMessage = async (req, res) => {
+  try {
+    const { userId, messageId, content } = req.body;
+
+    if (!userId || !content) {
+      return res.status(400).json({ success: false, message: "User ID and content are required" });
+    }
+
+    await db.query(
+      "INSERT INTO notifications (user_id, message_id, content) VALUES (?, ?, ?)",
+      [userId, messageId || null, content]
+    );
+
+    res.status(201).json({ success: true, message: "Reply sent to user notifications" });
+  } catch (error) {
+    console.error("Reply To Message Error:", error);
+    res.status(500).json({ success: false, message: "Failed to send reply", error: error.message });
+  }
+};
+
+module.exports = { getMessages, postMessage, deleteMessage, replyToMessage };

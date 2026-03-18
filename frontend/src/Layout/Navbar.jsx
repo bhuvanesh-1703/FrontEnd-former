@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { Container, Nav, Navbar, Form, FormControl } from "react-bootstrap";
-import { HiOutlineShoppingCart, HiSearch } from "react-icons/hi";
+import { Container, Nav, Navbar, Form, FormControl, NavDropdown } from "react-bootstrap";
+import { HiOutlineShoppingCart, HiSearch} from "react-icons/hi";
 import { FaLeaf } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import "../css/Navbar.css";
+
 
 function Header() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,7 +15,7 @@ function Header() {
   const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
 
-  const { userData } = useContext(AuthContext);
+  const { userData, setUserData } = useContext(AuthContext);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -25,20 +26,11 @@ function Header() {
     }
   };
 
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
-        document.querySelector(".search-input-field")?.focus();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+
 
   useEffect(() => {
     const fetchCartCount = async () => {
-      const userId = userData?.id || userData?._id;
+      const userId = userData?._id;
       if (userId) {
         try {
           const res = await axios.get(
@@ -139,7 +131,6 @@ function Header() {
             </Nav.Link>
           </Nav>
 
-         
           <div className="navbar-right">
             <Form
               className="search-bar-container"
@@ -175,7 +166,7 @@ function Header() {
             </Nav.Link>
 
             <div className="auth-group-nav">
-              {userData?.role !== 'vendor' && (
+              {userData?.role !== "vendor" && (
                 <Nav.Link
                   as={NavLink}
                   to="/vendor-register"
@@ -188,7 +179,7 @@ function Header() {
 
               {userData ? (
                 <div className="auth-group-nav">
-                  {userData.role === 'vendor' && (
+                  {userData.role === "vendor" && (
                     <Nav.Link
                       as={NavLink}
                       to="/vendor-dashboard"
@@ -203,15 +194,52 @@ function Header() {
                       Vendor Panel
                     </Nav.Link>
                   )}
-                  <Nav.Link
-                    as={NavLink}
-                    to="/dashboard"
-                    className="login-action-btn"
-                    onClick={() => setExpanded(false)}
+                  <NavDropdown
+                    title={
+                      userData.username.charAt(0).toUpperCase() +
+                      userData.username.slice(1)
+                    }
+                    id="basic-nav-dropdown"
+                    className="login-action-btn-dropdown p-2 rounded-pill "
+                    style={{ background: "transparent", color: "white", backgroundColor: "#0f350f" }}
                   >
-                    {userData.username.charAt(0).toUpperCase() +
-                      userData.username.slice(1)}
-                  </Nav.Link>
+                    {userData.role === "admin" && (
+                      <NavDropdown.Item as={NavLink} to="/admin" onClick={() => setExpanded(false)}>
+                        Admin Panel
+                      </NavDropdown.Item>
+                    )}
+                    {userData.role === "vendor" && (
+                      <NavDropdown.Item as={NavLink} to="/vendor-dashboard" onClick={() => setExpanded(false)}>
+                        Vendor Dashboard
+                      </NavDropdown.Item>
+                    )}
+                    {userData.role === "customer" &&(
+                      <>
+                        <NavDropdown.Item as={NavLink} to="/dashboard" onClick={() => setExpanded(false)}>
+                          Dashboard
+                        </NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to="/dashboard?tab=orders" onClick={() => setExpanded(false)}>
+                         My Orders
+                        </NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to="/dashboard?tab=profile" onClick={() => setExpanded(false)}>
+                          Profile
+                        </NavDropdown.Item>
+                       
+                      </>
+                    )}
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item
+                      onClick={() => {
+                        setExpanded(false);
+                        setUserData(null);
+                        localStorage.removeItem("user");
+                        localStorage.removeItem("token");
+                        navigate("/login");
+                      }}
+                    >
+                 Disconnect
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </div>
               ) : (
                 <Nav.Link

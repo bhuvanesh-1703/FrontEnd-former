@@ -12,6 +12,7 @@ const cartRouter=require("./router/cartRoute")
 const messageRouter=require("./router/messageRoute")
 const mailRouter=require("./nodeMailer/mailRoute")
 const adminRouter=require("./router/adminRoute")
+const notificationRouter=require("./router/notificationRoute")
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use("/api/cart",cartRouter)
 app.use("/api/messages",messageRouter)
 app.use("/api/mail",mailRouter)
 app.use("/api/admin",adminRouter)
+app.use("/api/notifications",notificationRouter)
 
 const PORT = process.env.PORT || 5100;
 

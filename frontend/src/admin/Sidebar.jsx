@@ -51,13 +51,6 @@ const Sidebar = () => {
         </li>
 
         <li className="sidebar-item">
-          <NavLink to="/admin/vendors" className="sidebar-link">
-            <FaUsers className="sidebar-icon" />
-            <span>Manage Vendors</span>
-          </NavLink>
-        </li>
-
-        <li className="sidebar-item">
           <NavLink to="/admin/users" className="sidebar-link">
             <FaUsers className="sidebar-icon" />
             <span>Users</span>

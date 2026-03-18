@@ -3,22 +3,27 @@
 .admin-container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f4f7f6;
 }
 
 .admin-body {
     display: flex;
     flex: 1;
+    overflow: hidden;
 }
 
 .sidebar-container {
-    width: 250px;
+    width: 260px;
     background-color: #ffffff;
     border-right: 1px solid #e0e0e0;
+    flex-shrink: 0;
 }
 
 .content-container {
     flex: 1;
-    padding: 30px;
-    background-color: #f8f9fa; 
+    padding: 40px;
+    overflow-y: auto;
+    background-color: #f8fafc;
 }

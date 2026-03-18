@@ -60,6 +60,7 @@ const ContactUs = () => {
     email: "",
     phone: "",
     message: "",
+    userId: null,
   });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -75,6 +76,7 @@ const ContactUs = () => {
           ...prev,
           name: parsedUser.username || parsedUser.name || "",
           email: parsedUser.email || "",
+          userId: parsedUser.id || parsedUser._id || null,
         }));
       }
     } catch (error) {
