@@ -11,6 +11,7 @@ const vendorRouter=require("./router/vendorRoute")
 const cartRouter=require("./router/cartRoute")
 const messageRouter=require("./router/messageRoute")
 const mailRouter=require("./nodeMailer/mailRoute")
+const adminRouter=require("./router/adminRoute")
 
 dotenv.config();
 
@@ -31,9 +32,10 @@ app.use("/api/vendor",vendorRouter)
 app.use("/api/cart",cartRouter)
 app.use("/api/messages",messageRouter)
 app.use("/api/mail",mailRouter)
+app.use("/api/admin",adminRouter)
 
 const PORT = process.env.PORT || 5100;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  // console.log(`Server running on port ${PORT}`);
 });

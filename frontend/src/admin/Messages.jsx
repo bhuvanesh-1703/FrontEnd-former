@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../Css-Folder/Messages.css";
+import "../Admin-Css-Folder/Messages.css";
 import { FaReply, FaTrash, FaEnvelope } from "react-icons/fa";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -47,7 +47,7 @@ const Messages = () => {
 
   const viewMessage = (msg) => {
     Swal.fire({
-      title: `<span style="color: #2e7d32">${msg.subject}</span>`,
+      title: `<span style="color: #2e7d32">Messages</span>`,
       html: `
      <div style="text-align: left; margin-top: 15px;">
      <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">

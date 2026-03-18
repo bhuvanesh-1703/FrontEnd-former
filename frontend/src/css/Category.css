@@ -1,6 +1,3 @@
-/* ============================================================
-   Farm Aura — Category Styles
-   ============================================================ */
 
 .category-section {
     padding: 100px 0;
@@ -9,6 +6,11 @@
 
 .category-header {
     margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .category-section-badge {

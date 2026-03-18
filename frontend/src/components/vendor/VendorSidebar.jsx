@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   FiGrid,
@@ -11,9 +11,11 @@ import {
 } from "react-icons/fi";
 import { GiFruiting } from "react-icons/gi";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../context/AuthContext";
 
 const VendorSidebar = () => {
   const navigate = useNavigate();
+  const { logout } = useContext(AuthContext);
 
   const handleLogout = () => {
     Swal.fire({
@@ -26,9 +28,8 @@ const VendorSidebar = () => {
       confirmButtonText: "Yes, Logout",
     }).then((result) => {
       if (result.isConfirmed) {
-        localStorage.removeItem("vendor");
-        localStorage.removeItem("vendorToken");
-        navigate("/vendor-login");
+        logout();
+        navigate("/");
       }
     });
   };

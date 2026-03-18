@@ -3,8 +3,8 @@ const nodemailer = require('nodemailer');
 const dotenv = require('dotenv')
 dotenv.config()
 
-console.log("EMAIL USER:", process.env.EMAIL_USER);
-console.log("EMAIL PASS:", process.env.EMAIL_PASS ? "Loaded" : "Missing");
+// console.log("EMAIL USER:", process.env.EMAIL_USER);
+// console.log("EMAIL PASS:", process.env.EMAIL_PASS ? "Loaded" : "Missing");
 
 const transport = nodemailer.createTransport({
    
@@ -28,7 +28,7 @@ const sendEmail = async (to, subject, html) => {
     };
 
     const info = await transport.sendMail(mailOptions);
-    console.log("Email sent:", info.messageId);
+    // console.log("Email sent:", info.messageId);
     return { success: true, info };
   } catch (error) {
     console.error("Error sending email:", error);
@@ -39,7 +39,7 @@ const sendEmail = async (to, subject, html) => {
 const orderSuccessMail = async (req, res) => {
   try {
     const { toMail, order } = req.body;
-    console.log("Request body:", req.body);
+    // console.log("Request body:", req.body);
 
     const html = `
         <h2>Thanks For Your Order</h2>

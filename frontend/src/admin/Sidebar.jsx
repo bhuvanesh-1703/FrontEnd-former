@@ -9,7 +9,7 @@ import {
   FaUsers,
   FaUser,
 } from "react-icons/fa";
-import "../Css-Folder/Sidebar.css";
+import "../Admin-Css-Folder/Sidebar.css";
 
 const Sidebar = () => {
   return (

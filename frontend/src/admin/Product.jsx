@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import "../Css-Folder/Product.css";
+import "../Admin-Css-Folder/Product.css";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
@@ -30,7 +30,7 @@ const Product = () => {
         });
         setProducts(sortedProducts);
       }
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
       console.error(
         "Failed to fetch products:",
@@ -164,7 +164,7 @@ const Product = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.put(`http://localhost:5100/api/product/${id}/status`, {
+        await axios.put(`http://localhost:5100/api/admin/product-status/${id}`, {
           status: newStatus,
         });
         Swal.fire("Success!", `Product has been ${newStatus}.`, "success");

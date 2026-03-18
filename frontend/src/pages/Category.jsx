@@ -10,9 +10,9 @@ const Category = () => {
     try {
       const response = await axios.get("http://localhost:5100/api/categories");
       setCategories(response.data.categories);
-      console.log(response.data.categories);
+      // console.log(response.data.categories);
     } catch (error) {
-      console.log("Failed to fetch category", error);
+      // console.log("Failed to fetch category", error);
     }
   };
 
@@ -31,10 +31,6 @@ const Category = () => {
           <h2 className="category-section-title">
             Shop By <span className="highlight-green">Category</span>
           </h2>
-          <p className="category-section-subtitle">
-            Explore our curated organic collections, handpicked for freshness
-            and quality.
-          </p>
         </div>
         <Row className="g-4 mt-2">
           {categories.map((cat) => (

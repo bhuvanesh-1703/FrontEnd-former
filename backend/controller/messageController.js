@@ -1,5 +1,5 @@
 const db = require("../DB_connection/db");
-const sendEmail = require("../nodeMailer/mailSender");
+const { sendEmail } = require("../nodeMailer/mailSender");
 
 const getMessages = async (req, res) => {
   try {

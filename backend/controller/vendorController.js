@@ -39,26 +39,26 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("Login attempt for email:", email);
+    // console.log("Login attempt for email:", email);
     const [vendors] = await db.query("SELECT * FROM vendors WHERE email = ?", [email]);
 
-    console.log("Vendors found:", vendors.length);
+    // console.log("Vendors found:", vendors.length);
     
     if (vendors.length === 0) {
-      console.log("Vendor not found");
+      // console.log("Vendor not found");
       return res.status(400).json({ success: false, message: "Vendor not found" });
     }
 
     const vendor = vendors[0];
-    console.log("Stored hash:", vendor.password);
+    // console.log("Stored hash:", vendor.password);
     const isMatch = await bcrypt.compare(password, vendor.password);
-    console.log("Password match:", isMatch);
+    // console.log("Password match:", isMatch);
     
     if (!isMatch) {
       return res.status(400).json({ success: false, message: "Invalid password" });
     }
 
-    console.log("SECRET_KEY during login:", process.env.SECRET_KEY);
+    // console.log("SECRET_KEY during login:", process.env.SECRET_KEY);
 
     const token = jwt.sign({ vendor_id: vendor.id }, process.env.SECRET_KEY, {
       expiresIn: "1d",
@@ -89,7 +89,7 @@ const updateVendorStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
-    console.log(status);
+    // console.log(status);
     
 
     if (!["pending", "approved", "rejected"].includes(status)) {

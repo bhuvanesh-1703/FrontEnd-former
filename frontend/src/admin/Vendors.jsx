@@ -36,7 +36,7 @@ const Vendors = () => {
     if (result.isConfirmed) {
       try {
         const res = await axios.put(
-          `http://localhost:5100/api/vendor/status/${id}`,
+          `http://localhost:5100/api/admin/vendor-status/${id}`,
           { status },
         );
         if (res.data.success) {

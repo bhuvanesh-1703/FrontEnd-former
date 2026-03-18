@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../Css-Folder/Dashboard.css";
+import "../Admin-Css-Folder/Dashboard.css";
 
 const Dashboard = () => {
   const [userCount, setUserCount] = useState(0);
@@ -10,26 +10,14 @@ const Dashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
-      // Fetch Users
-      const userRes = await axios.get("http://localhost:5100/api/users");
-      setUserCount(userRes.data.users.length);
-
-      // Fetch Products
-      const productRes = await axios.get("http://localhost:5100/api/product");
-      setProductCount(productRes.data.product.length);
-
-      // Fetch Categories
-      const categoryRes = await axios.get(
-        "http://localhost:5100/api/categories",
-      );
-      setCategoryCount(categoryRes.data.categories.length);
-
-      // Fetch Pending Orders
-      const orderRes = await axios.get("http://localhost:5100/api/orders");
-      const pending = orderRes.data.data.filter(
-        (order) => order.order_status === "Placed",
-      );
-      setPendingOrdersCount(pending.length);
+      const res = await axios.get("http://localhost:5100/api/admin/stats");
+      if (res.data.success) {
+        const stats = res.data.data;
+        setUserCount(stats.users);
+        setProductCount(stats.products);
+        setCategoryCount(stats.categories);
+        setPendingOrdersCount(stats.pendingOrders);
+      }
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
     }

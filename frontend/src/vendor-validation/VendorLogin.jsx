@@ -36,10 +36,14 @@ const VendorLogin = () => {
       );
       if (res.data?.success) {
         localStorage.setItem("vendorToken", res.data.data.token);
-        localStorage.setItem(
-          "vendor",
-          JSON.stringify(res.data.data.vendorData),
-        );
+        const vendorDataWithRole = { ...res.data.data.vendorData, role: 'vendor' };
+        localStorage.setItem("vendor", JSON.stringify(vendorDataWithRole));
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        
+        // Also update the global AuthContext if possible
+        window.dispatchEvent(new Event("storage")); // Trigger storage event for other tabs
+        
         Swal.fire({
           icon: "success",
           title: "Welcome Vendor!",
@@ -48,6 +52,7 @@ const VendorLogin = () => {
           showConfirmButton: false,
         });
         navigate("/vendor-dashboard");
+        window.location.reload(); // Force reload to update context if not properly wired
       } else {
         Swal.fire("Error", res.data?.message || "Login failed", "error");
       }

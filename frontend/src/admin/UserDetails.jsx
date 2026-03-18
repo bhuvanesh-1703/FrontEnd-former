@@ -1,5 +1,5 @@
 import React from "react";
-//import "../Css-Folder/UserDetails.css";
+import "../Admin-Css-Folder/UserDetails.css";
 
 const UserDetails = () => {
   const user = {

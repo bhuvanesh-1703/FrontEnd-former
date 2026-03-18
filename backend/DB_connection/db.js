@@ -10,11 +10,11 @@ const db = mysql.createPool({
 
 db.getConnection()
   .then((conn) => {
-    console.log(" DB Connected Successfully");
+    // console.log(" DB Connected Successfully");
     conn.release();
   })
   .catch((err) => {
-    console.log(" DB Connection Failed");
+    // console.log(" DB Connection Failed");
     console.error(err.message);
   });
 

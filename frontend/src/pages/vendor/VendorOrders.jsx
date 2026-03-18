@@ -2,11 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FiSearch, FiEye, FiPackage } from "react-icons/fi";
 import Swal from "sweetalert2";
+import "../../css/VendorOrders.css";
 
 const VendorOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [updatingStatus, setUpdatingStatus] = useState(false);
   const vendorData = JSON.parse(localStorage.getItem("vendor"));
 
   const fetchOrders = async () => {
@@ -57,153 +61,76 @@ const VendorOrders = () => {
     }
   };
 
-  const ViewDetails=()=>{
-  
-    Swal.fire({
-      title: "Order Details",
-      text: "Order details will be displayed here",
-      icon: "info",
-      confirmButtonText: "OK",
-    });
+  const ViewDetails = (order) => {
+    setSelectedOrder(order);
+    setIsModalOpen(true);
+  };
 
+  const handleStatusUpdate = async (orderId, newStatus) => {
+    try {
+      setUpdatingStatus(true);
+      await axios.put(`http://localhost:5100/api/orders/${orderId}`, {
+        order_status: newStatus,
+      });
 
-  }  
-  
+      const updatedOrders = orders.map((order) =>
+        order.id === orderId ? { ...order, order_status: newStatus } : order,
+      );
+      setOrders(updatedOrders);
+
+      if (selectedOrder && selectedOrder.id === orderId) {
+        setSelectedOrder((prev) => ({ ...prev, order_status: newStatus }));
+      }
+
+      Swal.fire({
+        icon: "success",
+        title: "Status Updated",
+        text: `Order status has been changed to ${newStatus}`,
+        timer: 1500,
+        showConfirmButton: false,
+        toast: true,
+        position: "center",
+      });
+    } catch (error) {
+      console.error("Error updating status:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Update Failed",
+        text: "Could not update the order status. Please try again.",
+      });
+    } finally {
+      setUpdatingStatus(false);
+    }
+  };
 
   return (
-    <div className="vendor-orders-page" style={{ padding: "0" }}>
-      <div className="section-header" style={{ marginBottom: "30px" }}>
-        <h2
-          style={{
-            fontSize: "1.8rem",
-            fontWeight: "700",
-            color: "#111827",
-            marginBottom: "5px",
-            fontFamily: "'Outfit', sans-serif",
-          }}
-        >
-          Orders Management
-        </h2>
-        <p style={{ color: "#6b7280", margin: 0, fontWeight: "500" }}>
-          Track and manage your customer orders.
-        </p>
+    <div className="vendor-orders-page">
+      <div className="section-header">
+        <h2>Orders Management</h2>
+        <p>Track and manage your customer orders.</p>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: "20px",
-          marginBottom: "30px",
-        }}
-      >
-        <div
-          style={{
-            background: "white",
-            padding: "24px",
-            borderRadius: "12px",
-            borderLeft: "4px solid #f97316",
-            boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "0.85rem",
-              fontWeight: "700",
-              color: "#6b7280",
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-              margin: "0 0 10px 0",
-            }}
-          >
-            Pending Orders
-          </p>
-          <h3
-            style={{
-              fontSize: "2rem",
-              fontWeight: "800",
-              color: "#111827",
-              margin: 0,
-            }}
-          >
-            {pendingCount}
-          </h3>
+      <div className="stats-grid">
+        <div className="stat-card pending">
+          <p>Pending Orders</p>
+          <h3>{pendingCount}</h3>
         </div>
-        <div
-          style={{
-            background: "white",
-            padding: "24px",
-            borderRadius: "12px",
-            borderLeft: "4px solid #22c55e",
-            boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "0.85rem",
-              fontWeight: "700",
-              color: "#6b7280",
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-              margin: "0 0 10px 0",
-            }}
-          >
-            Completed
-          </p>
-          <h3
-            style={{
-              fontSize: "2rem",
-              fontWeight: "800",
-              color: "#111827",
-              margin: 0,
-            }}
-          >
-            {completedCount}
-          </h3>
+        <div className="stat-card completed">
+          <p>Completed</p>
+          <h3>{completedCount}</h3>
         </div>
       </div>
 
-      <div
-        style={{
-          background: "white",
-          borderRadius: "16px",
-          padding: "24px",
-          boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginBottom: "20px",
-          }}
-        >
-          <div
-            style={{ position: "relative", width: "100%", maxWidth: "300px" }}
-          >
-            <FiSearch
-              style={{
-                position: "absolute",
-                left: "12px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                color: "#9ca3af",
-              }}
-            />
+      <div className="orders-table-container">
+        <div className="search-container">
+          <div className="search-input-wrapper">
+            <FiSearch className="search-icon" />
             <input
               type="text"
               placeholder="Search orders..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{
-                padding: "10px 12px 10px 36px",
-                border: "1px solid #e5e7eb",
-                borderRadius: "8px",
-                width: "100%",
-                outline: "none",
-                fontSize: "0.95rem",
-                background: "#f9fafb",
-              }}
+              className="search-input"
             />
           </div>
         </div>
@@ -216,185 +143,74 @@ const VendorOrders = () => {
           </div>
         ) : filteredOrders.length > 0 ? (
           <div className="table-responsive">
-            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <table className="orders-table">
               <thead>
-                <tr
-                  style={{
-                    background: "#f9fafb",
-                    borderBottom: "1px solid #e5e7eb",
-                  }}
-                >
-                  <th
-                    style={{
-                      padding: "12px 16px",
-                      textAlign: "left",
-                      fontSize: "0.75rem",
-                      fontWeight: "700",
-                      color: "#6b7280",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
-                    Order ID
-                  </th>
-                  <th
-                    style={{
-                      padding: "12px 16px",
-                      textAlign: "left",
-                      fontSize: "0.75rem",
-                      fontWeight: "700",
-                      color: "#6b7280",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
-                    Customer
-                  </th>
-                  <th
-                    style={{
-                      padding: "12px 16px",
-                      textAlign: "left",
-                      fontSize: "0.75rem",
-                      fontWeight: "700",
-                      color: "#6b7280",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
-                    Date
-                  </th>
-                  <th
-                    style={{
-                      padding: "12px 16px",
-                      textAlign: "left",
-                      fontSize: "0.75rem",
-                      fontWeight: "700",
-                      color: "#6b7280",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
-                    Vendor Subtotal
-                  </th>
-                  <th
-                    style={{
-                      padding: "12px 16px",
-                      textAlign: "left",
-                      fontSize: "0.75rem",
-                      fontWeight: "700",
-                      color: "#6b7280",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
-                    Status
-                  </th>
-                  <th
-                    style={{
-                      padding: "12px 16px",
-                      textAlign: "center",
-                      fontSize: "0.75rem",
-                      fontWeight: "700",
-                      color: "#6b7280",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
-                    Actions
-                  </th>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Date</th>
+                  <th>Vendor Subtotal</th>
+                  <th>Status</th>
+                  <th className="center">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredOrders.map((order) => {
                   const statusStyle = getStatusStyle(order.order_status);
                   return (
-                    <tr
-                      key={order.id}
-                      style={{ borderBottom: "1px solid #e5e7eb" }}
-                    >
-                      <td
-                        style={{
-                          padding: "16px",
-                          fontSize: "0.9rem",
-                          fontWeight: "600",
-                          color: "#111827",
-                        }}
-                      >
+                    <tr key={order.id}>
+                      <td className="order-id">
                         {order.order_id?.substring(0, 8)}...
                       </td>
-                      <td style={{ padding: "16px" }}>
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            fontWeight: "600",
-                            color: "#111827",
-                          }}
-                        >
+                      <td>
+                        <div className="customer-name">
                           {order.customer_name}
                         </div>
-                        <div style={{ fontSize: "0.8rem", color: "#6b7280" }}>
+                        <div className="customer-email">
                           {order.customer_email}
                         </div>
                       </td>
-                      <td
-                        style={{
-                          padding: "16px",
-                          fontSize: "0.9rem",
-                          color: "#4b5563",
-                        }}
-                      >
+                      <td className="order-date">
                         {new Date(order.created_at).toLocaleDateString()}
                       </td>
-                      <td
-                        style={{
-                          padding: "16px",
-                          fontSize: "0.95rem",
-                          fontWeight: "700",
-                          color: "#111827",
-                        }}
-                      >
+                      <td className="order-total">
                         ₹{order.total_amount?.toLocaleString() || "0.00"}
                       </td>
-                      <td style={{ padding: "16px" }}>
-                        <span
+                      <td>
+                        <select
+                          value={order.order_status || "Pending"}
+                          onChange={(e) =>
+                            handleStatusUpdate(order.id, e.target.value)
+                          }
+                          disabled={updatingStatus}
                           style={{
                             background: statusStyle.bg,
                             color: statusStyle.color,
-                            padding: "4px 10px",
-                            borderRadius: "9999px",
-                            fontSize: "0.75rem",
-                            fontWeight: "700",
-                            textTransform: "uppercase",
-                            display: "inline-block",
-                          }}
-                        >
-                          {order.order_status || "PENDING"}
-                        </span>
-                      </td>
-                      <td style={{ padding: "16px", textAlign: "center" }}>
-                        <button
-                          style={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                            gap: "6px",
-                            background: "#f3f4f6",
-                            color: "#374151",
-                            border: "none",
                             padding: "6px 12px",
-                            borderRadius: "6px",
+                            borderRadius: "8px",
                             fontSize: "0.85rem",
-                            fontWeight: "500",
-                            cursor: "pointer",
-                            transition: "all 0.2s",
+                            fontWeight: "700",
+                            border: "1px solid #e5e7eb",
+                            outline: "none",
+                            cursor: updatingStatus ? "not-allowed" : "pointer",
+                            textTransform: "uppercase",
+                            opacity: updatingStatus ? 0.7 : 1,
                           }}
-                          onMouseOver={(e) =>
-                            (e.currentTarget.style.background = "#e5e7eb")
-                          }
-                          onMouseOut={(e) =>
-                            (e.currentTarget.style.background = "#f3f4f6")
-                          }
                         >
-                          <FiEye size={14} onClick={ViewDetails(order.order.id)}/> Details
+                          <option value="Pending">Pending</option>
+                          <option value="Placed">Placed</option>
+                          <option value="Shipped">Shipped</option>
+                          <option value="Delivered">Delivered</option>
+                          <option value="Completed">Completed</option>
+                          <option value="Cancelled">Cancelled</option>
+                        </select>
+                      </td>
+                      <td className="center">
+                        <button
+                          className="details-btn"
+                          onClick={() => ViewDetails(order)}
+                        >
+                          <FiEye size={14} /> Details
                         </button>
                       </td>
                     </tr>
@@ -404,33 +220,212 @@ const VendorOrders = () => {
             </table>
           </div>
         ) : (
-          <div className="text-center py-5">
-            <FiPackage
-              size={48}
-              style={{
-                opacity: 0.2,
-                margin: "0 auto 16px auto",
-                display: "block",
-                color: "#6b7280",
-              }}
-            />
-            <p style={{ color: "#6b7280", margin: 0, fontWeight: "500" }}>
-              No recent orders.
-            </p>
+          <div className="empty-state">
+            <FiPackage size={48} className="empty-icon" />
+            <p className="empty-text">No recent orders.</p>
             {searchTerm && (
-              <p
-                style={{
-                  color: "#9ca3af",
-                  fontSize: "0.85rem",
-                  marginTop: "8px",
-                }}
-              >
+              <p className="empty-subtext">
                 Try adjusting your search criteria.
               </p>
             )}
           </div>
         )}
       </div>
+
+      {/* Order Details Modal */}
+      {isModalOpen && selectedOrder && (
+        <div
+          className="vendor-order-modal-overlay"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div
+            className="vendor-order-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="vendor-order-modal-header">
+              <div>
+                <h3>Order Details</h3>
+                <p>ID: {selectedOrder.order_id}</p>
+              </div>
+              <button
+                className="vendor-order-modal-close"
+                onClick={() => setIsModalOpen(false)}
+              >
+                &times;
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="vendor-order-modal-body">
+              {/* Customer Info & Status */}
+              <div className="vendor-order-modal-grid">
+                <div>
+                  <h4 className="vendor-order-modal-section-title">Customer</h4>
+                  <p className="vendor-order-modal-text-bold">
+                    {selectedOrder.customer_name}
+                  </p>
+                  <p className="vendor-order-modal-text">
+                    {selectedOrder.customer_email}
+                  </p>
+                  <p style={{ margin: 0, fontSize: "0.9rem" }}>
+                    {selectedOrder.customer_phone || "No phone provided"}
+                  </p>
+                </div>
+                <div>
+                  <h4 className="vendor-order-modal-section-title">
+                    Order Info
+                  </h4>
+                  <p className="vendor-order-modal-text">
+                    <span className="vendor-order-modal-text-light">Date:</span>{" "}
+                    {new Date(selectedOrder.created_at).toLocaleString()}
+                  </p>
+                  <p className="vendor-order-modal-text">
+                    <span className="vendor-order-modal-text-light">
+                      Payment:
+                    </span>{" "}
+                    {selectedOrder.payment_method || "Online"}
+                  </p>
+                  <div style={{ marginTop: "8px" }}>
+                    <span
+                      className="status-badge"
+                      style={{
+                        background: getStatusStyle(selectedOrder.order_status)
+                          .bg,
+                        color: getStatusStyle(selectedOrder.order_status).color,
+                      }}
+                    >
+                      {selectedOrder.order_status || "PENDING"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Shipping Address */}
+              <div className="vendor-order-modal-shipping">
+                <h4 className="vendor-order-modal-section-title">
+                  Shipping Address
+                </h4>
+                <div className="vendor-order-modal-shipping-text">
+                  {(() => {
+                    if (!selectedOrder.shipping_address)
+                      return "Address not provided";
+
+                    try {
+                      const addressObj =
+                        typeof selectedOrder.shipping_address === "string"
+                          ? JSON.parse(selectedOrder.shipping_address)
+                          : selectedOrder.shipping_address;
+
+                      if (
+                        typeof addressObj === "object" &&
+                        addressObj !== null
+                      ) {
+                        return (
+                          <>
+                            <p className="vendor-order-modal-text-bold">
+                              {addressObj.fullName}
+                            </p>
+                            <p className="vendor-order-modal-text">
+                              {addressObj.address}
+                            </p>
+                            <p className="vendor-order-modal-text">
+                              {addressObj.city} - {addressObj.pincode}
+                            </p>
+                            <p style={{ margin: 0 }}>
+                              Phone: {addressObj.phone}
+                            </p>
+                          </>
+                        );
+                      }
+                    } catch (e) {
+                      // If it's not valid JSON, just return the string as is
+                    }
+
+                    return (
+                      <p style={{ margin: 0 }}>
+                        {String(selectedOrder.shipping_address)}
+                      </p>
+                    );
+                  })()}
+                </div>
+              </div>
+
+              {/* Order Items */}
+              <div>
+                <h4 className="vendor-order-modal-section-title">
+                  Order Items
+                </h4>
+                <div className="vendor-order-modal-items">
+                  {(() => {
+                    let items = [];
+                    try {
+                      items =
+                        typeof selectedOrder.products === "string"
+                          ? JSON.parse(selectedOrder.products)
+                          : selectedOrder.products || [];
+                    } catch (e) {
+                      console.error("Failed to parse items", e);
+                    }
+
+                    if (items.length === 0) {
+                      return (
+                        <div
+                          style={{
+                            padding: "16px",
+                            textAlign: "center",
+                            color: "#6b7280",
+                          }}
+                        >
+                          No items found
+                        </div>
+                      );
+                    }
+
+                    return items.map((item, idx) => (
+                      <div key={idx} className="vendor-order-modal-item">
+                        <div>
+                          <p className="vendor-order-modal-item-name">
+                            {item.name ||
+                              item.product_name ||
+                              "Unknown Product"}
+                          </p>
+                          <p className="vendor-order-modal-item-details">
+                            Qty: {item.quantity} × ₹{item.price}
+                          </p>
+                        </div>
+                        <div className="vendor-order-modal-item-price">
+                          ₹{(item.quantity * item.price).toLocaleString()}
+                        </div>
+                      </div>
+                    ));
+                  })()}
+                </div>
+
+                {/* Total */}
+                <div className="vendor-order-modal-total">
+                  <span className="vendor-order-modal-total-label">
+                    Vendor Subtotal
+                  </span>
+                  <span className="vendor-order-modal-total-value">
+                    ₹{selectedOrder.total_amount?.toLocaleString() || "0.00"}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="vendor-order-modal-footer">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="vendor-order-modal-btn"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

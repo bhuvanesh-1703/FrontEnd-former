@@ -4,6 +4,20 @@ const createCart = async (req, res) => {
   try {
     const { productId, userId, quantity } = req.body;
 
+    if (!userId || !productId) {
+      return res.status(400).json({ success: false, message: "User ID and Product ID are required." });
+    }
+
+    const [userExists] = await db.query("SELECT id FROM users WHERE id = ?", [userId]);
+    if (userExists.length === 0) {
+      return res.status(401).json({ success: false, message: "User not found. Please log in again." });
+    }
+
+    const [productExists] = await db.query("SELECT id FROM products WHERE id = ?", [productId]);
+    if (productExists.length === 0) {
+      return res.status(404).json({ success: false, message: "Product not found." });
+    }
+
     const [existing] = await db.query(
       "SELECT * FROM cart WHERE product_id = ? AND user_id = ?",
       [productId, userId]

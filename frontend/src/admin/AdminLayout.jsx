@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import { Outlet } from "react-router-dom";
-import "../Css-Folder/AdminLayout.css";
+import { Outlet, Navigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import "../Admin-Css-Folder/AdminLayout.css";
 
 const AdminLayout = () => {
+  const { userData } = useContext(AuthContext);
+
+  if (!userData || userData.role !== 'admin') {
+    return <Navigate to="/" replace />;
+  }
   return (
     <div className="admin-container">
       <Header />

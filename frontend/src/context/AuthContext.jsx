@@ -5,8 +5,19 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(() => {
     try {
-      const stored = localStorage.getItem("user");
-      return stored ? JSON.parse(stored) : null;
+      const storedUser = localStorage.getItem("user");
+      const storedVendor = localStorage.getItem("vendor");
+      
+      if (storedVendor) {
+        const vendor = JSON.parse(storedVendor);
+        return { ...vendor, role: 'vendor' };
+      }
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+       
+        return { ...user, role: user.role?.toLowerCase() || 'customer' };
+      }
+      return null;
     } catch (err) {
       return null;
     }
@@ -14,7 +25,9 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("vendor");
     localStorage.removeItem("token");
+    localStorage.removeItem("vendorToken");
     setUserData(null);
   };
 

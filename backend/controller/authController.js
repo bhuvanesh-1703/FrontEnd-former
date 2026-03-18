@@ -49,16 +49,21 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    // console.log(`Login attempt for email: "${email}"`);
+    // console.log(`Password received: "${password}" (Length: ${password.length})`);
+    
     const [users] = await db.query("SELECT * FROM users WHERE email = ?", [
       email,
     ]);
 
     if (users.length===0) {
+      // console.log("Login failed: User not found");
       return res.status(400).json({ success: false, message: "user not found" });
     }
 
     const isMatch = await bcrypt.compare(password, users[0].password);
     if (!isMatch) {
+      // console.log("Login failed: Invalid password");
       return res
         .status(400)
         .json({ success: false, message: "invalid password" });
@@ -68,7 +73,7 @@ const login = async (req, res) => {
       expiresIn: "1d",
     });
 
-    // console.log("userdata==",users);
+    // console.log("Login successful for:", email);
     return res
       .status(200)
       .json({
@@ -81,8 +86,8 @@ const login = async (req, res) => {
      
       
   } catch (error) {
-
-    return res.status(400).json({success:false,message:"failed to login"})
+    console.error("Login catch error:", error);
+    return res.status(400).json({success:false,message:"failed to login", error: error.message})
 
   }
 };

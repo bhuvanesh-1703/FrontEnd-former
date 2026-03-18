@@ -63,11 +63,22 @@ const Showcase = () => {
       }
     } catch (error) {
       console.error("Failed to add to cart:", error);
-      Swal.fire(
-        "Error",
-        "Could not add item to cart. Please try again.",
-        "error",
-      );
+      if (error.response?.status === 401) {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        Swal.fire("Session Expired", "Please log in again.", "warning").then(
+          () => {
+            window.location.href = "/login";
+          },
+        );
+      } else {
+        Swal.fire(
+          "Error",
+          error.response?.data?.message ||
+            "Could not add item to cart. Please try again.",
+          "error",
+        );
+      }
     }
   };
 
@@ -82,7 +93,7 @@ const Showcase = () => {
       );
       setRecentProducts(response.data.product.slice(0, 8));
     } catch (error) {
-      console.log("Failed to fetch recent products", error);
+      // console.log("Failed to fetch recent products", error);
     }
   };
 

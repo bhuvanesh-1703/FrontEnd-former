@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import "../Css-Folder/Category.css";
+import "../Admin-Css-Folder/Category.css";
 
 const Category = () => {
   const [categories, setCategories] = useState([]);

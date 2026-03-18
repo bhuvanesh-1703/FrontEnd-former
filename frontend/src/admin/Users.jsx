@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { GiCancel } from "react-icons/gi";
 import Swal from "sweetalert2";
-import "../Css-Folder/Users.css";
+import "../Admin-Css-Folder/Users.css";
 
 const Users = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -52,7 +52,7 @@ const Users = () => {
           showConfirmButton: false,
         });
       } catch (err) {
-        console.log("Error updating user:", err);
+        // console.log("Error updating user:", err);
         Swal.fire({
           icon: "error",
           title: "Error!",
@@ -125,7 +125,7 @@ const Users = () => {
         setUserShow(response.data.users);
       }
     } catch (err) {
-      console.log("Fetching failed", err);
+      // console.log("Fetching failed", err);
     }
   };
 

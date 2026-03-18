@@ -26,6 +26,15 @@ import VendorProducts from "./pages/vendor/VendorProducts";
 import AddProductVendor from "./pages/vendor/AddProductVendor";
 import VendorOrders from "./pages/vendor/VendorOrders";
 import VendorProfile from "./pages/vendor/VendorProfile";
+import AdminLayout from "./admin/AdminLayout";
+import AdminDashboard from "./admin/Dashboard";
+import UserDetails from "./admin/UserDetails";
+import AdminUsers from "./admin/Users";
+import AdminProduct from "./admin/Product";
+import AdminCategory from "./admin/Category";
+import AdminOrders from "./admin/Orders";
+import AdminMessages from "./admin/Messages";
+import AdminVendors from "./admin/Vendors";
 
 import { HiArrowUp } from "react-icons/hi";
 import "./App.css";
@@ -50,10 +59,11 @@ function App() {
   };
 
   const isVendorRoute = location.pathname.startsWith("/vendor-");
+  const isAdminRoute = location.pathname.startsWith("/admin");
 
   return (
     <div className="App">
-      <Header />
+      {!isAdminRoute && <Header />}
 
       <main>
         <Routes>
@@ -85,10 +95,22 @@ function App() {
             <Route path="vendor-orders" element={<VendorOrders />} />
             <Route path="vendor-profile" element={<VendorProfile />} />
           </Route>
+
+          {/* Admin Routes */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="products" element={<AdminProduct />} />
+            <Route path="categories" element={<AdminCategory />} />
+            <Route path="orders" element={<AdminOrders />} />
+            <Route path="messages" element={<AdminMessages />} />
+            <Route path="vendors" element={<AdminVendors />} />
+            <Route path="profile" element={<UserDetails />} />
+            <Route path="users" element={<AdminUsers />} />
+          </Route>
         </Routes>
       </main>
 
-      {!isVendorRoute && <Footer />}
+      {!isVendorRoute && !isAdminRoute && <Footer />}
 
       <button
         className={`scroll-to-top ${showScrollTop ? "visible" : ""}`}

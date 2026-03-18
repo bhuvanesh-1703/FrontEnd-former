@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import "../Css-Folder/Order.css";
+import "../Admin-Css-Folder/Order.css";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -15,7 +15,7 @@ const Orders = () => {
       }
       setLoading(false);
     } catch (err) {
-      console.log("Fetching orders failed", err);
+      // console.log("Fetching orders failed", err);
       setLoading(false);
     }
   };

@@ -17,7 +17,7 @@ const ViewProduct = () => {
         `http://localhost:5100/api/product/${id}`,
       );
       setProduct(response.data.product);
-      console.log(response.data.product);
+      // console.log(response.data.product);
     } catch (error) {
       console.error("Failed to fetch product:", error);
     } finally {
@@ -173,15 +173,27 @@ const ViewProduct = () => {
                   Sold by:{" "}
                   <strong>{product.vendor_name || "Generic Farm"}</strong>
                 </p>
-                <div className="quantity-selector">
+                <div className="quantity-selector" style={{ color: product.stock > 0 ? "#2e7d32" : "#d32f2f" }}>
                   <HiCheckCircle size={20} />
-                  In Stock & Ready to Ship
+                  {product.stock > 0 ? (
+                    <span>In Stock ({product.stock}kg available)</span>
+                  ) : (
+                    <span>Out of Stock</span>
+                  )}
                 </div>
               </div>
 
-              <button className="add-to-cart-btn" onClick={addToCart}>
+              <button 
+                className="add-to-cart-btn" 
+                onClick={addToCart}
+                disabled={product.stock <= 0}
+                style={{
+                   opacity: product.stock <= 0 ? 0.6 : 1,
+                   cursor: product.stock <= 0 ? "not-allowed" : "pointer"
+                }}
+              >
                 <HiOutlineShoppingCart size={24} />
-                Add to Shopping Cart
+                {product.stock > 0 ? "Add to Shopping Cart" : "Currently Unavailable"}
               </button>
             </Col>
           </Row>

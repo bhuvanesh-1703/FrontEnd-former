@@ -22,7 +22,7 @@ const CategoryView = () => {
       );
       setProducts(response.data.product);
     } catch (error) {
-      console.log("Product fetch failed", error);
+      // console.log("Product fetch failed", error);
     } finally {
       setLoading(false);
     }
@@ -91,11 +91,22 @@ const CategoryView = () => {
       }
     } catch (error) {
       console.error("Failed to add to cart:", error);
-      Swal.fire(
-        "Error",
-        "Could not add item to cart. Please try again.",
-        "error",
-      );
+      if (error.response?.status === 401) {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        Swal.fire("Session Expired", "Please log in again.", "warning").then(
+          () => {
+            window.location.href = "/login";
+          },
+        );
+      } else {
+        Swal.fire(
+          "Error",
+          error.response?.data?.message ||
+            "Could not add item to cart. Please try again.",
+          "error",
+        );
+      }
     }
   };
 
@@ -117,7 +128,8 @@ const CategoryView = () => {
         ) : (
           <Row className="g-4">
             <h1 style={{ textAlign: "center" }}>
-              <span style={{color:"#1b5e20"}}>Our</span> <span style={{color:"#2db236ff"}}>Categories</span>
+              <span style={{ color: "#1b5e20" }}>Our</span>{" "}
+              <span style={{ color: "#2db236ff" }}>Categories</span>
             </h1>
             {filteredProducts.map((product) => (
               <Col key={product.id} xs={6} sm={6} lg={3}>

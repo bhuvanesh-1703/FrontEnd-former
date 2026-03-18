@@ -1,13 +1,13 @@
 const db = require("../DB_connection/db");
 const { sendEmail } = require("../nodeMailer/mailSender");
 
-/* ================= GET ORDERS ================= */
+
 const getOrders = async (req, res) => {
   try {
     const { userId, vendorId } = req.query;
 
     let query = `
-      SELECT DISTINCT o.*, u.username AS customer_name, u.email AS customer_email
+      SELECT DISTINCT o.*, u.username AS customer_name, u.email AS customer_email, u.phonenumber AS customer_phone
       FROM orders o
       LEFT JOIN users u ON o.user_id = u.id
       JOIN order_items oi ON o.id = oi.order_id
@@ -85,21 +85,26 @@ const placeOrder = async (req, res) => {
 
     await connection.beginTransaction();
 
-    let totalAmount = 0;
-
+    // 1. Validate stock and calculate total
     for (const item of products) {
       const [productData] = await connection.query(
-        "SELECT price FROM products WHERE id = ?",
+        "SELECT price, stock, name FROM products WHERE id = ?",
         [item.product_id],
       );
 
       if (productData.length === 0) {
-        throw new Error("Product not found");
+        throw new Error(`Product not found (ID: ${item.product_id})`);
       }
 
-      totalAmount += productData[0].price * item.quantity;
+      const product = productData[0];
+      if (product.stock < item.quantity) {
+        throw new Error(`Insufficient stock for ${product.name}. Available: ${product.stock}`);
+      }
+
+      totalAmount += product.price * item.quantity;
     }
 
+    // 2. Create the order
     const [orderResult] = await connection.query(
       `INSERT INTO orders 
       (order_id, user_id, total_amount, payment_method, payment_status, order_status, shipping_address)
@@ -117,10 +122,17 @@ const placeOrder = async (req, res) => {
 
     const orderId = orderResult.insertId;
 
+    // 3. Create order items and decrement stock
     for (const item of products) {
       const [productData] = await connection.query(
         "SELECT price FROM products WHERE id = ?",
         [item.product_id],
+      );
+
+      // Decrement stock
+      await connection.query(
+        "UPDATE products SET stock = stock - ? WHERE id = ?",
+        [item.quantity, item.product_id]
       );
 
       await connection.query(
@@ -174,9 +186,10 @@ const placeOrder = async (req, res) => {
     await connection.rollback();
     console.error("Place Order Error:", error);
 
-    res.status(500).json({
+    const isStockError = error.message.includes("stock") || error.message.includes("found");
+    res.status(isStockError ? 400 : 500).json({
       success: false,
-      message: "Order placement failed",
+      message: isStockError ? error.message : "Order placement failed",
     });
   } finally {
     connection.release();

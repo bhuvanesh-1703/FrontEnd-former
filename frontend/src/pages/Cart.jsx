@@ -29,9 +29,9 @@ const Cart = () => {
         `http://localhost:5100/api/cart?userId=${userId}`,
       );
       setCart(response.data.data);
-      console.log(response.data.data);
+      // console.log(response.data.data);
     } catch (error) {
-      console.log("failed to fetch Product", error);
+      // console.log("failed to fetch Product", error);
     } finally {
       setLoading(false);
     }
@@ -45,7 +45,7 @@ const Cart = () => {
       });
       getCart();
     } catch (error) {
-      console.log("Failed to update quantity", error);
+      // console.log("Failed to update quantity", error);
     }
   };
 
@@ -75,7 +75,7 @@ const Cart = () => {
         });
       }
     } catch (error) {
-      console.log("Failed to remove item", error);
+      // console.log("Failed to remove item", error);
     }
   };
 

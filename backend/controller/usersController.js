@@ -15,7 +15,7 @@ const postUsers = async (req, res) => {
   try {
     const { username, email, password, phonenumber } = req.body;
 
-    console.log(req.body);
+    // console.log(req.body);
 
     const [existingUser] = await db.query(
       "SELECT * FROM users WHERE email = ?",
@@ -38,7 +38,7 @@ const postUsers = async (req, res) => {
     res
       .status(200)
       .json({ success: true, message: "user register success", users });
-    console.log("users==", users);
+    // console.log("users==", users);
   } catch (error) {
     res.status(400).json({ success: false, message: "user register failed", error: error.message });
   }
@@ -72,7 +72,7 @@ const deleteUsers = async (req, res) => {
 
     const [userDel] = await db.query("DELETE FROM users WHERE id = ?", [userId]);
 
-    console.log("delete");
+    // console.log("delete");
 
    
     if (userDel.affectedRows === 0) {

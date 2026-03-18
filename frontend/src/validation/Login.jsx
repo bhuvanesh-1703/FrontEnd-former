@@ -54,17 +54,28 @@ const Login = () => {
       const user = res.data?.data?.userData;
 
       if (token) localStorage.setItem("token", token);
-      if (user) localStorage.setItem("user", JSON.stringify(user));
-      setUserData?.(user);
+      if (user) {
+        const role = user.role?.toLowerCase() || 'customer';
+        const userDataWithRole = { ...user, role };
+        localStorage.setItem("user", JSON.stringify(userDataWithRole));
+        localStorage.removeItem("vendor");
+        localStorage.removeItem("vendorToken");
+        setUserData?.(userDataWithRole);
 
-      Swal.fire({
-        icon: "success",
-        title: "Welcome back",
-        text: "Signed in successfully.",
-        timer: 1200,
-        showConfirmButton: false,
-      });
-      navigate("/");
+        Swal.fire({
+          icon: "success",
+          title: "Welcome back",
+          text: "Signed in successfully.",
+          timer: 1200,
+          showConfirmButton: false,
+        });
+
+        if (role === 'admin' || role === 'customer') {
+          navigate("/dashboard");
+        } else {
+          navigate("/");
+        }
+      }
     } catch (err) {
       Swal.fire("Authentication error", err.response?.data?.message, "error");
     }

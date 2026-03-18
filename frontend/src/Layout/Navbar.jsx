@@ -175,7 +175,7 @@ function Header() {
             </Nav.Link>
 
             <div className="auth-group-nav">
-              {!localStorage.getItem("vendor") && (
+              {userData?.role !== 'vendor' && (
                 <Nav.Link
                   as={NavLink}
                   to="/vendor-register"
@@ -188,7 +188,7 @@ function Header() {
 
               {userData ? (
                 <div className="auth-group-nav">
-                  {localStorage.getItem("vendor") && (
+                  {userData.role === 'vendor' && (
                     <Nav.Link
                       as={NavLink}
                       to="/vendor-dashboard"
