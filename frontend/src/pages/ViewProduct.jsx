@@ -14,9 +14,7 @@ const ViewProduct = () => {
 
   const getProduct = async () => {
     try {
-      const response = await axios.get(
-        `${API_URL}/api/product/${id}`,
-      );
+      const response = await axios.get(`${API_URL}/api/product/${id}`);
       setProduct(response.data.product);
       // console.log(response.data.product);
     } catch (error) {
@@ -174,7 +172,10 @@ const ViewProduct = () => {
                   Sold by:{" "}
                   <strong>{product.vendor_name || "Generic Farm"}</strong>
                 </p>
-                <div className="quantity-selector" style={{ color: product.stock > 0 ? "#2e7d32" : "#d32f2f" }}>
+                <div
+                  className="quantity-selector"
+                  style={{ color: product.stock > 0 ? "#2e7d32" : "#d32f2f" }}
+                >
                   <HiCheckCircle size={20} />
                   {product.stock > 0 ? (
                     <span>In Stock ({product.stock}kg available)</span>
@@ -184,17 +185,19 @@ const ViewProduct = () => {
                 </div>
               </div>
 
-              <button 
-                className="add-to-cart-btn" 
+              <button
+                className="add-to-cart-btn"
                 onClick={addToCart}
                 disabled={product.stock <= 0}
                 style={{
-                   opacity: product.stock <= 0 ? 0.6 : 1,
-                   cursor: product.stock <= 0 ? "not-allowed" : "pointer"
+                  opacity: product.stock <= 0 ? 0.6 : 1,
+                  cursor: product.stock <= 0 ? "not-allowed" : "pointer",
                 }}
               >
                 <HiOutlineShoppingCart size={24} />
-                {product.stock > 0 ? "Add to Shopping Cart" : "Currently Unavailable"}
+                {product.stock > 0
+                  ? "Add to Shopping Cart"
+                  : "Currently Unavailable"}
               </button>
             </Col>
           </Row>

@@ -14,7 +14,6 @@ import {
   FiUser,
   FiGrid,
   FiSettings,
- 
 } from "react-icons/fi";
 
 const Dashboard = () => {
@@ -54,7 +53,7 @@ const Dashboard = () => {
       }
 
       const response = await axios.get(
-        `${API_URL}/api/orders?userId=${currentUserId}`
+        `${API_URL}/api/orders?userId=${currentUserId}`,
       );
       setOrders(response?.data?.data || []);
     } catch (error) {
@@ -72,10 +71,10 @@ const Dashboard = () => {
   // Derived Stats
   const totalOrders = orders.length;
   const pendingOrders = orders.filter(
-    (o) => o?.order_status?.toLowerCase() === "pending"
+    (o) => o?.order_status?.toLowerCase() === "pending",
   ).length;
   const deliveredOrders = orders.filter(
-    (o) => o?.order_status?.toLowerCase() === "delivered"
+    (o) => o?.order_status?.toLowerCase() === "delivered",
   ).length;
 
   const renderOverview = () => (
@@ -123,7 +122,9 @@ const Dashboard = () => {
         <div className="text-center py-5">Loading recent activity...</div>
       ) : (
         <div style={{ marginTop: "40px" }}>
-          <h3 style={{ marginBottom: "20px", fontWeight: "600", color: "#333" }}>
+          <h3
+            style={{ marginBottom: "20px", fontWeight: "600", color: "#333" }}
+          >
             Recent Orders
           </h3>
           {renderOrders(3)}
@@ -173,7 +174,11 @@ const Dashboard = () => {
               <div>
                 <span className="order-id-badge">Order #{order?.id}</span>
                 <span
-                  style={{ marginLeft: "15px", color: "#777", fontSize: "0.9rem" }}
+                  style={{
+                    marginLeft: "15px",
+                    color: "#777",
+                    fontSize: "0.9rem",
+                  }}
                 >
                   {order?.created_at
                     ? new Date(order.created_at).toLocaleDateString()
@@ -196,15 +201,17 @@ const Dashboard = () => {
                     <img
                       src={
                         prod?.image
-                          ? `${API_URL}/uploads/${
-                              prod.image.split(",")[0]
-                            }`
+                          ? `${API_URL}/uploads/${prod.image.split(",")[0]}`
                           : "https://via.placeholder.com/50"
                       }
                       alt={prod?.name}
                     />
                     <div className="order-item-details">
-                      <strong>{prod?.name?.length > 15 ? prod?.name.substring(0, 15) + "..." : prod?.name}</strong>
+                      <strong>
+                        {prod?.name?.length > 15
+                          ? prod?.name.substring(0, 15) + "..."
+                          : prod?.name}
+                      </strong>
                       <span>
                         {prod?.quantity}kg • ₹{prod?.price}
                       </span>
@@ -213,7 +220,13 @@ const Dashboard = () => {
                 ))}
               </div>
               <div className="order-total-price d-flex flex-column align-items-end justify-content-center border-start ps-3 ms-2">
-                <span style={{ fontSize: "0.8rem", color: "#777", fontWeight: "normal" }}>
+                <span
+                  style={{
+                    fontSize: "0.8rem",
+                    color: "#777",
+                    fontWeight: "normal",
+                  }}
+                >
                   Total Amount
                 </span>
                 ₹{order?.total_amount || 0}
@@ -232,13 +245,17 @@ const Dashboard = () => {
               <div className="d-flex align-items-center gap-2">
                 <FiMapPin className="text-secondary" />
                 <span>
-                  {order?.shipping_address?.address || order?.shipping_address?.city || "Address Info"}
+                  {order?.shipping_address?.address ||
+                    order?.shipping_address?.city ||
+                    "Address Info"}
                 </span>
               </div>
               <div className="d-flex align-items-center gap-2">
                 <FiTruck className="text-secondary" />
                 <span>
-                  {order?.payment_method === 'Cash on Delivery' ? 'COD' : order?.payment_method || "Payment"}
+                  {order?.payment_method === "Cash on Delivery"
+                    ? "COD"
+                    : order?.payment_method || "Payment"}
                 </span>
               </div>
             </div>
@@ -252,7 +269,6 @@ const Dashboard = () => {
     <div className="fade-in">
       <div className="content-header">
         <h2 className="content-title">Profile</h2>
-        
       </div>
 
       <div className="profile-form">
@@ -296,8 +312,6 @@ const Dashboard = () => {
             style={{ fontWeight: "600", color: "#2D5A27" }}
           />
         </div>
-
-        
       </div>
     </div>
   );
@@ -332,7 +346,7 @@ const Dashboard = () => {
               className={`sidebar-btn ${activeTab === "profile" ? "active" : ""}`}
               onClick={() => setActiveTab("profile")}
             >
-              <FiUser /> Profile 
+              <FiUser /> Profile
             </button>
             <button
               className={`sidebar-btn ${activeTab === "notification" ? "active" : ""}`}
@@ -340,7 +354,7 @@ const Dashboard = () => {
             >
               <FiUser /> Notification
             </button>
-            
+
             {userData?.role === "admin" && (
               <button
                 className="sidebar-btn"

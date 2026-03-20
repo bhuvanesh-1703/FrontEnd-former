@@ -28,9 +28,7 @@ const VendorProfile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get(
-          `${API_URL}/api/vendor/${vendorLocal.id}`,
-        );
+        const res = await axios.get(`${API_URL}/api/vendor/${vendorLocal.id}`);
         setVendor(res.data.data);
         setFormData({
           username: res.data.data.username,
