@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_URL from "../../config";
 import {
   FiPackage,
   FiShoppingBag,
@@ -27,14 +28,14 @@ const VendorDashboard = () => {
       try {
         // Fetch products
         const ProductResponse = await axios.get(
-          `http://localhost:5100/api/product?vendorId=${vendorData.id}`,
+          `${API_URL}/api/product?vendorId=${vendorData.id}`,
         );
         const fetchedProducts = ProductResponse.data.product;
         setProducts(fetchedProducts.slice(0, 5)); // Just top 5
 
         // Fetch orders
         const OrderResponse = await axios.get(
-          `http://localhost:5100/api/orders?vendorId=${vendorData.id}`,
+          `${API_URL}/api/orders?vendorId=${vendorData.id}`,
         );
         const fetchedOrders = OrderResponse.data.data || [];
         setOrders(fetchedOrders.slice(0, 5));

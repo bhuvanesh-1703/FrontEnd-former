@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_URL from "../config";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
@@ -14,7 +15,7 @@ const ViewProduct = () => {
   const getProduct = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5100/api/product/${id}`,
+        `${API_URL}/api/product/${id}`,
       );
       setProduct(response.data.product);
       // console.log(response.data.product);
@@ -67,7 +68,7 @@ const ViewProduct = () => {
       }
 
       const userId = storedUserData.id;
-      const response = await axios.post("http://localhost:5100/api/cart", {
+      const response = await axios.post(`${API_URL}/api/cart`, {
         userId: userId,
         productId: product.id,
         quantity: 1,
@@ -105,7 +106,7 @@ const ViewProduct = () => {
               <div className="main-image-viewport">
                 {images.length > 0 ? (
                   <img
-                    src={`http://localhost:5100/uploads/${images[activeImage]}`}
+                    src={`${API_URL}/uploads/${images[activeImage]}`}
                     alt={product.name}
                     className="main-product-image"
                   />
@@ -134,7 +135,7 @@ const ViewProduct = () => {
                       onClick={() => setActiveImage(index)}
                     >
                       <img
-                        src={`http://localhost:5100/uploads/${img}`}
+                        src={`${API_URL}/uploads/${img}`}
                         alt={`${product.name}  ${index}`}
                       />
                     </div>

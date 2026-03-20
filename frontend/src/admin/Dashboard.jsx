@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../config";
 import "../Admin-Css-Folder/Dashboard.css";
 import { FaUsers, FaBox, FaFolderOpen, FaHourglassHalf } from "react-icons/fa";
 
@@ -11,7 +12,7 @@ const Dashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
-      const res = await axios.get("http://localhost:5100/api/admin/stats");
+      const res = await axios.get(`${API_URL}/api/admin/stats`);
       if (res.data.success) {
         const stats = res.data.data;
         setUserCount(stats.users);

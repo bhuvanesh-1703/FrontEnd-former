@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import API_URL from "../../config";
 import {
   FiUser,
   FiMail,
@@ -28,7 +29,7 @@ const VendorProfile = () => {
     const fetchProfile = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5100/api/vendor/${vendorLocal.id}`,
+          `${API_URL}/api/vendor/${vendorLocal.id}`,
         );
         setVendor(res.data.data);
         setFormData({
@@ -53,7 +54,7 @@ const VendorProfile = () => {
     e.preventDefault();
     try {
       const res = await axios.put(
-        `http://localhost:5100/api/vendor/profile/${vendorLocal.id}`,
+        `${API_URL}/api/vendor/profile/${vendorLocal.id}`,
         formData,
       );
       if (res.data.success) {

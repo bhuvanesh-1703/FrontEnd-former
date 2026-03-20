@@ -7,7 +7,7 @@ import "../css/Login.css";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const API_BASE = import.meta?.env?.VITE_API_BASE_URL || "http://localhost:5100";
+import API_URL from "../config";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const Login = () => {
     if (!validate(values)) return;
 
     try {
-      const res = await axios.post(`${API_BASE}/api/auth/login`, {
+      const res = await axios.post(`${API_URL}/api/auth/login`, {
         email: values.email.trim(),
         password: values.password.trim(),
       });

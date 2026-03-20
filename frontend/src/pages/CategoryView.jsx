@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../config";
 import { useParams, Link } from "react-router-dom";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
 import { HiMinus, HiPlus, HiOutlineShoppingCart } from "react-icons/hi";
@@ -18,7 +19,7 @@ const CategoryView = () => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5100/api/product?status=approved",
+        `${API_URL}/api/product?status=approved`,
       );
       setProducts(response.data.product);
     } catch (error) {
@@ -72,7 +73,7 @@ const CategoryView = () => {
 
       const userId = storedUserData.id || storedUserData._id;
       const quantity = quantities[product.id] || 1;
-      const response = await axios.post("http://localhost:5100/api/cart", {
+      const response = await axios.post(`${API_URL}/api/cart`, {
         userId: userId,
         productId: product.id,
         quantity: quantity,
@@ -138,7 +139,7 @@ const CategoryView = () => {
                   <div className="product-image-wrapper">
                     <Link to={`/productdetails/${product.id}`}>
                       <img
-                        src={`http://localhost:5100/uploads/${product.image.split(",")[0]}`}
+                        src={`${API_URL}/uploads/${product.image.split(",")[0]}`}
                         alt={product.name}
                         className="product-img"
                         loading="lazy"

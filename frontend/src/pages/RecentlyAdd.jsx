@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_URL from "../config";
 import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import {
@@ -44,7 +45,7 @@ const Showcase = () => {
 
       const userId = storedUserData.id || storedUserData._id;
       const quantity = quantities[product.id] || 1;
-      const response = await axios.post("http://localhost:5100/api/cart", {
+      const response = await axios.post(`${API_URL}/api/cart`, {
         userId: userId,
         productId: product.id,
         quantity: quantity,
@@ -89,7 +90,7 @@ const Showcase = () => {
   const fetchRecentProducts = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5100/api/product?status=approved",
+        `${API_URL}/api/product?status=approved`,
       );
       setRecentProducts(response.data.product.slice(0, 8));
     } catch (error) {
@@ -122,7 +123,7 @@ const Showcase = () => {
                 <div className="product-image-wrapper">
                   <Link to={`/productdetails/${product.id}`}>
                     <img
-                      src={`http://localhost:5100/uploads/${product.image.split(",")[0]}`}
+                      src={`${API_URL}/uploads/${product.image.split(",")[0]}`}
                       alt={product.name}
                       className="product-img"
                       loading="lazy"

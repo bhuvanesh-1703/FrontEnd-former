@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import API_URL from "../config";
 import "../Admin-Css-Folder/Product.css";
 
 const Product = () => {
@@ -20,7 +21,7 @@ const Product = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:5100/api/product");
+      const res = await axios.get(`${API_URL}/api/product`);
       if (res.data.product) {
         // Sort pending products to the top
         const sortedProducts = res.data.product.sort((a, b) => {
@@ -41,7 +42,7 @@ const Product = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:5100/api/categories");
+      const res = await axios.get(`${API_URL}/api/categories`);
       if (res.data && res.data.categories) {
         setCategories(res.data.categories);
       }
@@ -85,10 +86,10 @@ const Product = () => {
 
     try {
       if (isEditMode) {
-        await axios.put(`http://localhost:5100/api/product/${editId}`, data);
+        await axios.put(`${API_URL}/api/product/${editId}`, data);
         Swal.fire("Updated!", "Product Updated Successfully", "success");
       } else {
-        await axios.post("http://localhost:5100/api/product", data);
+        await axios.post(`${API_URL}/api/product`, data);
         Swal.fire("Added!", "Product Added Successfully", "success");
       }
       resetForm();
@@ -142,7 +143,7 @@ const Product = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:5100/api/product/${id}`);
+        await axios.delete(`${API_URL}/api/product/${id}`);
         Swal.fire("Deleted!", "Product has been deleted.", "success");
         fetchProducts();
       }
@@ -164,7 +165,7 @@ const Product = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.put(`http://localhost:5100/api/admin/product-status/${id}`, {
+        await axios.put(`${API_URL}/api/admin/product-status/${id}`, {
           status: newStatus,
         });
         Swal.fire("Success!", `Product has been ${newStatus}.`, "success");
@@ -300,7 +301,7 @@ const Product = () => {
                   <td>
                     {product.image ? (
                       <img
-                        src={`http://localhost:5100/uploads/${product.image.split(",")[0]}`}
+                        src={`${API_URL}/uploads/${product.image.split(",")[0]}`}
                         alt={product.name}
                         className="product-img-thumb"
                       />

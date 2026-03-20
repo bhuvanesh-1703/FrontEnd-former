@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../Admin-Css-Folder/Messages.css";
 import { FaReply, FaTrash, FaEnvelope } from "react-icons/fa";
 import axios from "axios";
+import API_URL from "../config";
 import Swal from "sweetalert2";
 
 const Messages = () => {
@@ -11,7 +12,7 @@ const Messages = () => {
 
   const fetchMessages = async () => {
     try {
-      const response = await axios.get("http://localhost:5100/api/messages");
+      const response = await axios.get(`${API_URL}/api/messages`);
       if (response.data && response.data.messages) {
         setMessages(response.data.messages);
       }
@@ -34,7 +35,7 @@ const Messages = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:5100/api/messages/${id}`);
+          await axios.delete(`${API_URL}/api/messages/${id}`);
           setMessages(messages.filter((msg) => msg.id !== id));
           if (selectedMessage?.id === id) setSelectedMessage(null);
           Swal.fire("Deleted!", "Message has been deleted.", "success");

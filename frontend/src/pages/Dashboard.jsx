@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import axios from "axios";
+import API_URL from "../config";
 import { AuthContext } from "../context/AuthContext";
 import "../css/Dashboard.css";
 
@@ -53,7 +54,7 @@ const Dashboard = () => {
       }
 
       const response = await axios.get(
-        `http://localhost:5100/api/orders?userId=${currentUserId}`
+        `${API_URL}/api/orders?userId=${currentUserId}`
       );
       setOrders(response?.data?.data || []);
     } catch (error) {
@@ -195,7 +196,7 @@ const Dashboard = () => {
                     <img
                       src={
                         prod?.image
-                          ? `http://localhost:5100/uploads/${
+                          ? `${API_URL}/uploads/${
                               prod.image.split(",")[0]
                             }`
                           : "https://via.placeholder.com/50"

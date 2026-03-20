@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../config";
 import Swal from "sweetalert2";
 import "../Admin-Css-Folder/Order.css";
 
@@ -9,7 +10,7 @@ const Orders = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get("http://localhost:5100/api/orders");
+      const response = await axios.get(`${API_URL}/api/orders`);
       if (response.data && response.data.data) {
         setOrders(response.data.data);
       }
@@ -32,7 +33,7 @@ const Orders = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.put(`http://localhost:5100/api/orders/${orderId}`, {
+          await axios.put(`${API_URL}/api/orders/${orderId}`, {
             order_status: newStatus,
           });
           Swal.fire("Updated!", "Order status has been updated.", "success");
@@ -57,7 +58,7 @@ const Orders = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:5100/api/orders/${orderId}`);
+          await axios.delete(`${API_URL}/api/orders/${orderId}`);
           Swal.fire("Deleted!", "Order has been deleted.", "success");
           fetchOrders();
         } catch (err) {
@@ -74,7 +75,7 @@ const Orders = () => {
         ?.map(
           (p) => `
       <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; text-align: left; padding: 5px; border-bottom: 1px solid #eee;">
-        <img src="http://localhost:5100/uploads/${p.image?.split(",")[0]}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;" />
+        <img src="${API_URL}/uploads/${p.image?.split(",")[0]}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;" />
         <div>
           <div style="font-weight: 600; font-size: 14px;">${p.name}</div>
           <div style="font-size: 12px; color: #666;">Qty: ${p.quantity}kg | Price: Rs.${p.price}</div>

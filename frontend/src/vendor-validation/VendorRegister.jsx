@@ -4,7 +4,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import "../css/Vendor.css";
 
-const API_BASE = import.meta?.env?.VITE_API_BASE_URL || "http://localhost:5100";
+import API_URL from "../config";
 
 const VendorRegister = () => {
   const navigate = useNavigate();

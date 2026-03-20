@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_URL from "../config";
 import { Container, Row, Col } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import "../css/Category.css";
@@ -8,7 +9,7 @@ const Category = () => {
   const [categories, setCategories] = useState([]);
   const fetchCategory = async () => {
     try {
-      const response = await axios.get("http://localhost:5100/api/categories");
+      const response = await axios.get(`${API_URL}/api/categories`);
       setCategories(response.data.categories);
       // console.log(response.data.categories);
     } catch (error) {
@@ -42,7 +43,7 @@ const Category = () => {
                 <article className="category-card">
                   <div className="category-image-container">
                     <img
-                      src={`http://localhost:5100/uploads/${cat.image?.split(",")[0]}`}
+                      src={`${API_URL}/uploads/${cat.image?.split(",")[0]}`}
                       alt={cat.category_name}
                       className="category-image"
                       loading="lazy"

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../config";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
 import {
   HiPlus,
@@ -26,7 +27,7 @@ const Cart = () => {
       }
       const userId = storedUserData.id || storedUserData._id;
       const response = await axios.get(
-        `http://localhost:5100/api/cart?userId=${userId}`,
+        `${API_URL}/api/cart?userId=${userId}`,
       );
       setCart(response.data.data);
       // console.log(response.data.data);
@@ -40,7 +41,7 @@ const Cart = () => {
   const handleQtyChange = async (id, qty) => {
     if (qty < 1) return;
     try {
-      await axios.put(`http://localhost:5100/api/cart/${id}`, {
+      await axios.put(`${API_URL}/api/cart/${id}`, {
         quantity: qty,
       });
       getCart();
@@ -64,7 +65,7 @@ const Cart = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:5100/api/cart/${id}`);
+        await axios.delete(`${API_URL}/api/cart/${id}`);
         getCart();
         Swal.fire({
           title: "Removed!",
@@ -140,7 +141,7 @@ const Cart = () => {
                 >
                   <div className="cart-item-image-wrapper">
                     <img
-                      src={`http://localhost:5100/uploads/${item.image.split(",")[0]}`}
+                      src={`${API_URL}/uploads/${item.image.split(",")[0]}`}
                       alt={item.name}
                       className="cart-item-image"
                     />

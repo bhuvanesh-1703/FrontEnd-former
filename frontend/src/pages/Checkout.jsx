@@ -12,6 +12,7 @@ import {
 } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import API_URL from "../config";
 import Swal from "sweetalert2";
 import { AuthContext } from "../context/AuthContext";
 import "../css/Checkout.css";
@@ -42,7 +43,7 @@ const Checkout = () => {
         return;
       }
       const response = await axios.get(
-        `http://localhost:5100/api/cart?userId=${userId}`,
+        `${API_URL}/api/cart?userId=${userId}`,
       );
       setCart(response.data.data || []);
     } catch (error) {
@@ -108,7 +109,7 @@ const Checkout = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:5100/api/orders",
+        `${API_URL}/api/orders`,
         orderData,
       );
 
@@ -306,7 +307,7 @@ const Checkout = () => {
                 {cart.map((item) => (
                   <div key={item.id} className="summary-item-small">
                     <img
-                      src={`http://localhost:5100/uploads/${item.image.split(",")[0]}`}
+                      src={`${API_URL}/uploads/${item.image.split(",")[0]}`}
                       alt={item.name}
                       className="summary-img"
                     />

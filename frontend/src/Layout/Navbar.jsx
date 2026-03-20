@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import API_URL from "../config";
 import { Container, Nav, Navbar, Form, FormControl, NavDropdown } from "react-bootstrap";
 import { HiOutlineShoppingCart, HiSearch} from "react-icons/hi";
 import { FaLeaf } from "react-icons/fa";
@@ -34,7 +35,7 @@ function Header() {
       if (userId) {
         try {
           const res = await axios.get(
-            `http://localhost:5100/api/cart?userId=${userId}`,
+            `${API_URL}/api/cart?userId=${userId}`,
           );
           setCartCount(res.data.data?.length || 0);
         } catch (error) {

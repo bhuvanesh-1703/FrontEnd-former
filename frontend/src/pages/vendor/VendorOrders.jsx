@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_URL from "../../config";
 import { FiSearch, FiEye, FiPackage } from "react-icons/fi";
 import Swal from "sweetalert2";
 import "../../css/VendorOrders.css";
@@ -16,7 +17,7 @@ const VendorOrders = () => {
   const fetchOrders = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5100/api/orders?vendorId=${vendorData.id}`,
+        `${API_URL}/api/orders?vendorId=${vendorData.id}`,
       );
       setOrders(res.data.data || []);
       setLoading(false);
@@ -69,7 +70,7 @@ const VendorOrders = () => {
   const handleStatusUpdate = async (orderId, newStatus) => {
     try {
       setUpdatingStatus(true);
-      await axios.put(`http://localhost:5100/api/orders/${orderId}`, {
+      await axios.put(`${API_URL}/api/orders/${orderId}`, {
         order_status: newStatus,
       });
 

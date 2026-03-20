@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import API_URL from "../config";
 import { FaCheck, FaTimes, FaEye } from "react-icons/fa";
 
 const Vendors = () => {
@@ -9,7 +10,7 @@ const Vendors = () => {
 
   const fetchVendors = async () => {
     try {
-      const res = await axios.get("http://localhost:5100/api/vendor");
+      const res = await axios.get(`${API_URL}/api/vendor`);
       if (res.data.success) {
         setVendors(res.data.data);
       }
@@ -36,7 +37,7 @@ const Vendors = () => {
     if (result.isConfirmed) {
       try {
         const res = await axios.put(
-          `http://localhost:5100/api/admin/vendor-status/${id}`,
+          `${API_URL}/api/admin/vendor-status/${id}`,
           { status },
         );
         if (res.data.success) {
@@ -52,7 +53,7 @@ const Vendors = () => {
   const viewIdProof = (image) => {
     Swal.fire({
       title: "ID Proof",
-      imageUrl: `http://localhost:5100/uploads/${image}`,
+      imageUrl: `${API_URL}/uploads/${image}`,
       imageAlt: "ID Proof",
       confirmButtonText: "Close",
     });

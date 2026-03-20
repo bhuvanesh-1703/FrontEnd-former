@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_URL from "../config";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
@@ -18,7 +19,7 @@ const Product = () => {
   const fetchProduct = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5100/api/product?status=approved",
+        `${API_URL}/api/product?status=approved`,
       );
       setGetProduct(response.data.product);
       setFilteredProducts(response.data.product);
@@ -29,7 +30,7 @@ const Product = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get("http://localhost:5100/api/categories");
+      const response = await axios.get(`${API_URL}/api/categories`);
       setCategories(response.data.categories);
     } catch (error) {
       console.error("Failed to fetch categories", error);
@@ -95,7 +96,7 @@ const Product = () => {
 
       const userId = storedUserData.id || storedUserData._id;
       const quantity = quantities[product.id] || 1;
-      const response = await axios.post("http://localhost:5100/api/cart", {
+      const response = await axios.post(`${API_URL}/api/cart`, {
         userId: userId,
         productId: product.id,
         quantity: quantity,
@@ -158,7 +159,7 @@ const Product = () => {
                   <div className="product-image-wrapper">
                     {product.image ? (
                       <img
-                        src={`http://localhost:5100/uploads/${product.image.split(",")[0]}`}
+                        src={`${API_URL}/uploads/${product.image.split(",")[0]}`}
                         alt={product.name}
                         className="product-img"
                       />

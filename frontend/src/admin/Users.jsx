@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../config";
 import { GiCancel } from "react-icons/gi";
 import Swal from "sweetalert2";
 import "../Admin-Css-Folder/Users.css";
@@ -41,7 +42,7 @@ const Users = () => {
 
     if (isEdit) {
       try {
-        await axios.put(`http://localhost:5100/api/users/${editUserId}`, user);
+        await axios.put(`${API_URL}/api/users/${editUserId}`, user);
         getUsers();
         resetForm();
         Swal.fire({
@@ -74,7 +75,7 @@ const Users = () => {
             text: "All fields are required",
           });
         }
-        await axios.post("http://localhost:5100/api/users", user);
+        await axios.post(`${API_URL}/api/users`, user);
         Swal.fire({
           icon: "success",
           title: "Added!",
@@ -108,7 +109,7 @@ const Users = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:5100/api/users/${id}`);
+        await axios.delete(`${API_URL}/api/users/${id}`);
         Swal.fire("Deleted!", "User has been deleted.", "success");
         getUsers();
       } catch (err) {
@@ -120,7 +121,7 @@ const Users = () => {
 
   const getUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:5100/api/users");
+      const response = await axios.get(`${API_URL}/api/users`);
       if (response.data && response.data.users) {
         setUserShow(response.data.users);
       }

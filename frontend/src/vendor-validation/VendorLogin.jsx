@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import API_URL from "../config";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -31,7 +32,7 @@ const VendorLogin = () => {
 
     try {
       const res = await axios.post(
-        `http://localhost:5100/api/vendor/login`,
+        `${API_URL}/api/vendor/login`,
         values,
       );
       if (res.data?.success) {
@@ -52,7 +53,7 @@ const VendorLogin = () => {
           showConfirmButton: false,
         });
         navigate("/vendor-dashboard");
-        window.location.reload(); // Force reload to update context if not properly wired
+        window.location.reload(); 
       } else {
         Swal.fire("Error", res.data?.message || "Login failed", "error");
       }

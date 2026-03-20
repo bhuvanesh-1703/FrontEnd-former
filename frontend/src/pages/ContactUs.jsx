@@ -13,6 +13,7 @@ import {
   FaLinkedinIn,
 } from "react-icons/fa";
 import axios from "axios";
+import API_URL from "../config";
 import Swal from "sweetalert2";
 import "../css/Contact.css";
 
@@ -91,7 +92,7 @@ const ContactUs = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post("http://localhost:5100/api/messages", form);
+      await axios.post(`${API_URL}/api/messages`, form);
       setSent(true);
       setForm({ name: "", email: "", phone: "", message: "" });
       Swal.fire({

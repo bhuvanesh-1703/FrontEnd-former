@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_URL from "../../config";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { FiUploadCloud, FiPackage, FiActivity } from "react-icons/fi";
@@ -34,7 +35,7 @@ const AddProductVendor = () => {
 
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:5100/api/categories");
+        const res = await axios.get(`${API_URL}/api/categories`);
         setCategories(res.data.categories || []);
       } catch (err) {
         console.error("Failed to fetch categories:", err);
@@ -72,7 +73,7 @@ const AddProductVendor = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5100/api/product",
+        `${API_URL}/api/product`,
         formData,
       );
       if (res.data.success) {

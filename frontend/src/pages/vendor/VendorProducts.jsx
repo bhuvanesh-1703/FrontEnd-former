@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import API_URL from "../../config";
 import {
   FiPlus,
   FiTrash2,
@@ -38,7 +39,7 @@ const VendorProducts = () => {
     try {
       setLoadingProducts(true);
       const res = await axios.get(
-        `http://localhost:5100/api/product?vendorId=${vendorData.id}`,
+        `${API_URL}/api/product?vendorId=${vendorData.id}`,
       );
       setProducts(res.data.product || []);
     } catch (err) {
@@ -50,7 +51,7 @@ const VendorProducts = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:5100/api/categories");
+      const res = await axios.get(`${API_URL}/api/categories`);
       setCategories(res.data.categories || []);
     } catch (err) {
       console.error("Failed to fetch categories:", err);
@@ -77,7 +78,7 @@ const VendorProducts = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:5100/api/product/${id}`);
+        await axios.delete(`${API_URL}/api/product/${id}`);
         Swal.fire("Deleted!", "Your product has been deleted.", "success");
         fetchProducts();
       } catch (err) {
@@ -192,7 +193,7 @@ const VendorProducts = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5100/api/product",
+        `${API_URL}/api/product`,
         formData,
       );
       if (res.data.success) {
@@ -646,7 +647,7 @@ const VendorProducts = () => {
                     >
                       {product.image ? (
                         <img
-                          src={`http://localhost:5100/uploads/${product.image.split(",")[0]}`}
+                          src={`${API_URL}/uploads/${product.image.split(",")[0]}`}
                           alt=""
                           style={{
                             width: "50px",

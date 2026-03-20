@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import API_URL from "../config";
 import "../Admin-Css-Folder/Category.css";
 
 const Category = () => {
@@ -17,7 +18,7 @@ const Category = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:5100/api/categories");
+      const res = await axios.get(`${API_URL}/api/categories`);
       if (res.data && res.data.categories) {
         setCategories(res.data.categories);
       }
@@ -63,10 +64,10 @@ const Category = () => {
 
     try {
       if (isEditMode) {
-        await axios.put(`http://localhost:5100/api/categories/${editId}`, data);
+        await axios.put(`${API_URL}/api/categories/${editId}`, data);
         Swal.fire("Success", "Category updated successfully", "success");
       } else {
-        await axios.post("http://localhost:5100/api/categories", data);
+        await axios.post(`${API_URL}/api/categories`, data);
         Swal.fire("Success", "Category added successfully", "success");
       }
       resetForm();
@@ -101,7 +102,7 @@ const Category = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:5100/api/categories/${id}`);
+        await axios.delete(`${API_URL}/api/categories/${id}`);
         Swal.fire("Deleted!", "Category has been deleted.", "success");
         fetchCategories();
       } catch (err) {
@@ -201,7 +202,7 @@ const Category = () => {
                     <td>
                       <div className="table-img-wrapper">
                         <img
-                          src={`http://localhost:5100/uploads/${cat.image}`}
+                          src={`${API_URL}/uploads/${cat.image}`}
                           alt={cat.category_name || "Category"}
                           className="table-category-img"
                         />

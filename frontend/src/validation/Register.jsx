@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import API_URL from "../config";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -54,7 +55,7 @@ const Register = () => {
     if (!validate(values)) return;
 
     try {
-      const res = await axios.post(`http://localhost:5100/api/auth/register`, {
+      const res = await axios.post(`${API_URL}/api/auth/register`, {
         username: values.username.trim(),
         email: values.email.trim(),
         phonenumber: values.phonenumber.trim(),
