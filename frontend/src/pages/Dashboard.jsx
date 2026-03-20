@@ -14,6 +14,7 @@ import {
   FiUser,
   FiGrid,
   FiSettings,
+  FiBell,
 } from "react-icons/fi";
 
 const Dashboard = () => {
@@ -29,7 +30,9 @@ const Dashboard = () => {
   }, [location]);
 
   const [orders, setOrders] = useState([]);
+  const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [notifLoading, setNotifLoading] = useState(false);
 
   const { userData, setUserData } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -64,8 +67,24 @@ const Dashboard = () => {
     }
   };
 
+  const getNotifications = async () => {
+    try {
+      const currentUserId = userData?.id || userData?._id;
+      if (!currentUserId) return;
+      
+      setNotifLoading(true);
+      const response = await axios.get(`${API_URL}/api/notifications?userId=${currentUserId}`);
+      setNotifications(response.data.notifications || []);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    } finally {
+      setNotifLoading(false);
+    }
+  };
+
   useEffect(() => {
     getOrders();
+    getNotifications();
   }, [userData]);
 
   // Derived Stats
@@ -316,6 +335,63 @@ const Dashboard = () => {
     </div>
   );
 
+  const markAsRead = async (id) => {
+    try {
+      await axios.put(`${API_URL}/api/notifications/${id}`);
+      setNotifications(notifications.map(n => n.id === id ? { ...n, is_read: 1 } : n));
+    } catch (error) {
+      console.error("Error marking notification as read:", error);
+    }
+  };
+
+  const deleteNotification = async (id) => {
+    try {
+      await axios.delete(`${API_URL}/api/notifications/${id}`);
+      setNotifications(notifications.filter(n => n.id !== id));
+    } catch (error) {
+      console.error("Error deleting notification:", error);
+    }
+  };
+
+  const renderNotification = () => (
+    <div className="fade-in">
+      <div className="content-header">
+        <h2 className="content-title">Notifications</h2>
+        <p className="content-subtitle">Stay updated with messages from our team.</p>
+      </div>
+
+      <div className="notifications-list">
+        {notifLoading ? (
+          <div className="text-center py-5">Loading notifications...</div>
+        ) : notifications.length === 0 ? (
+          <div className="empty-state">
+            <div className="empty-icon"><FiBell /></div>
+            <h3>No Notifications</h3>
+            <p>You're all caught up!</p>
+          </div>
+        ) : (
+          notifications.map((notif) => (
+            <div key={notif.id} className={`notification-card ${notif.is_read ? 'read' : 'unread'}`}>
+               <div className="notif-content">
+                  <div className="notif-header">
+                    <span className="notif-time">{new Date(notif.created_at).toLocaleString()}</span>
+                    {!notif.is_read && <span className="unread-badge">New</span>}
+                  </div>
+                  <p className="notif-text">{notif.content}</p>
+               </div>
+               <div className="notif-actions">
+                  {!notif.is_read && (
+                    <button className="notif-btn read-btn" onClick={() => markAsRead(notif.id)}>Mark as Read</button>
+                  )}
+                  <button className="notif-btn delete-btn" onClick={() => deleteNotification(notif.id)}>Delete</button>
+               </div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+
   return (
     <div className="dashboard-wrapper">
       <div className="dashboard-container">
@@ -352,7 +428,10 @@ const Dashboard = () => {
               className={`sidebar-btn ${activeTab === "notification" ? "active" : ""}`}
               onClick={() => setActiveTab("notification")}
             >
-              <FiUser /> Notification
+              <FiBell /> Notification
+              {notifications.filter(n => !n.is_read).length > 0 && (
+                <span className="notif-count-badge">{notifications.filter(n => !n.is_read).length}</span>
+              )}
             </button>
 
             {userData?.role === "admin" && (

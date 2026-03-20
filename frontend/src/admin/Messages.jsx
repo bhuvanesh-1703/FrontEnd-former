@@ -52,6 +52,8 @@ const Messages = () => {
       html: `
      <div style="text-align: left; margin-top: 15px;">
      <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+     <div style="margin-bottom: 10px;"><strong>From:</strong> ${msg.name}</div>
+     <div style="margin-bottom: 10px;"><strong>Email:</strong> ${msg.email}</div>
     <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; line-height: 1.6; color: #333;">
      ${msg.message}
      </div>
@@ -59,6 +61,50 @@ const Messages = () => {
   `,
       confirmButtonText: "Close",
       confirmButtonColor: "#2e7d32",
+    });
+  };
+
+  const handleReply = (msg) => {
+    Swal.fire({
+      title: "Reply to Message",
+      input: "textarea",
+      inputLabel: `Sending reply to ${msg.name} (${msg.email})`,
+      inputPlaceholder: "Type your reply here...",
+      inputAttributes: {
+        "aria-label": "Type your reply here",
+      },
+      showCancelButton: true,
+      confirmButtonColor: "#2e7d32",
+      confirmButtonText: "Send Reply",
+      showLoaderOnConfirm: true,
+      preConfirm: async (content) => {
+        if (!content) {
+          Swal.showValidationMessage("Reply content cannot be empty");
+          return false;
+        }
+        try {
+          const response = await axios.post(`${API_URL}/api/messages/reply`, {
+            userId: msg.user_id,
+            messageId: msg.id,
+            content: content,
+          });
+          return response.data;
+        } catch (error) {
+          Swal.showValidationMessage(
+            `Request failed: ${error.response?.data?.message || error.message}`
+          );
+        }
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: "success",
+          title: "Reply Sent",
+          text: "The reply has been sent to the user's notifications.",
+          confirmButtonColor: "#2e7d32",
+        });
+      }
     });
   };
 
@@ -118,6 +164,15 @@ const Messages = () => {
                         >
                           View
                         </button>
+                        {msg.user_id && (
+                          <button
+                            className="edit-btn"
+                            style={{ backgroundColor: "#1976d2", marginLeft: "5px" }}
+                            onClick={() => handleReply(msg)}
+                          >
+                            Reply
+                          </button>
+                        )}
                       </div>
                     </td>
                     <td>
