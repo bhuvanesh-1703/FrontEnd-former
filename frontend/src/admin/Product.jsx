@@ -371,6 +371,7 @@ const Product = () => {
                             className="edit-btn"
                             style={{
                               background: "#10b981",
+                               color:"white",
                               padding: "5px 10px",
                             }}
                             onClick={() =>
@@ -383,6 +384,7 @@ const Product = () => {
                             className="delete-btn"
                             style={{
                               background: "#ef4444",
+                              color:"white",
                               padding: "5px 10px",
                             }}
                             onClick={() =>

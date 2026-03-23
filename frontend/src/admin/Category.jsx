@@ -114,10 +114,11 @@ const Category = () => {
 
   return (
     <div className="category-container">
-      <div className="category-header">
-        <h2>{isEditMode ? "Edit Category" : "Manage Categories"}</h2>
+      <div className="category-header" >
+        <h2 style={{color:"#2D5A27"}}>{isEditMode ? "Edit Category" : "Manage Categories"}</h2>
         <button
           className="add-btn"
+          style={{marginTop:"15px"}}
           onClick={() => (isAddMode ? resetForm() : setIsAddMode(true))}
         >
           {isAddMode ? "View All Categories" : "Add New Category"}

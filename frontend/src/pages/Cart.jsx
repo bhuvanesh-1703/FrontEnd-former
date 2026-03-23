@@ -26,9 +26,7 @@ const Cart = () => {
         return;
       }
       const userId = storedUserData.id || storedUserData._id;
-      const response = await axios.get(
-        `${API_URL}/api/cart?userId=${userId}`,
-      );
+      const response = await axios.get(`${API_URL}/api/cart?userId=${userId}`);
       setCart(response.data.data);
       // console.log(response.data.data);
     } catch (error) {
@@ -44,6 +42,7 @@ const Cart = () => {
       await axios.put(`${API_URL}/api/cart/${id}`, {
         quantity: qty,
       });
+      window.dispatchEvent(new Event("cart-updated"));
       getCart();
     } catch (error) {
       // console.log("Failed to update quantity", error);
@@ -66,6 +65,7 @@ const Cart = () => {
 
       if (result.isConfirmed) {
         await axios.delete(`${API_URL}/api/cart/${id}`);
+        window.dispatchEvent(new Event("cart-updated"));
         getCart();
         Swal.fire({
           title: "Removed!",
@@ -154,7 +154,6 @@ const Cart = () => {
                     >
                       {item.name}
                     </Link>
-                 
 
                     <p>{item.category_name}</p>
                     <div className="cart-item-controls mt-3">

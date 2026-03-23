@@ -52,6 +52,7 @@ const Showcase = () => {
       });
 
       if (response.data.success) {
+        window.dispatchEvent(new Event("cart-updated"));
         Swal.fire({
           icon: "success",
           title: "Added to Cart!",
@@ -106,9 +107,14 @@ const Showcase = () => {
     <section className="product-showcase">
       <Container>
         <div className="showcase-header text-center mb-4">
-          <span className="featured-label">Featured Products</span>
-          <h1 className="showcase-title">
-            Our <span className="highlight-luxury">Organic Farm</span>
+          <span className="featured-label" style={{ color: "#2D5A27" }}>
+            Featured Products
+          </span>
+          <h1 className="showcase-title" style={{ color: "#000000" }}>
+            Our{" "}
+            <span className="highlight-luxury" style={{ color: "#2D5A27" }}>
+              Organic Farm
+            </span>
           </h1>
           <p className="showcase-subtitle">
             Pure. Sustainable. Fresh seasonal harvests.

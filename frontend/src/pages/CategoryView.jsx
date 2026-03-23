@@ -80,6 +80,7 @@ const CategoryView = () => {
       });
 
       if (response.data.success) {
+        window.dispatchEvent(new Event("cart-updated"));
         Swal.fire({
           icon: "success",
           title: "Added to Cart!",

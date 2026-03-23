@@ -1,13 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import API_URL from "../config";
-import { Container, Nav, Navbar, Form, FormControl, NavDropdown } from "react-bootstrap";
-import { HiOutlineShoppingCart, HiSearch} from "react-icons/hi";
+import {
+  Container,
+  Nav,
+  Navbar,
+  Form,
+  FormControl,
+  NavDropdown,
+} from "react-bootstrap";
+import { HiOutlineShoppingCart, HiSearch } from "react-icons/hi";
 import { FaLeaf } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import "../css/Navbar.css";
-
 
 function Header() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -27,29 +33,82 @@ function Header() {
     }
   };
 
-
-
   useEffect(() => {
-    const fetchCartCount = async () => {
-      const userId = userData?._id;
-      if (userId) {
-        try {
-          const res = await axios.get(
-            `${API_URL}/api/cart?userId=${userId}`,
-          );
-          setCartCount(res.data.data?.length || 0);
-        } catch (error) {
-          console.error("Error fetching cart count:", error);
+    const fetchCartCount = async (userIdToUse) => {
+      try {
+        if (!userIdToUse) {
+          setCartCount(0);
+          return;
         }
-      } else {
+
+        console.log("Fetching cart for userId:", userIdToUse);
+        const res = await axios.get(
+          `${API_URL}/api/cart?userId=${userIdToUse}`,
+        );
+
+        console.log("Cart API response:", res.data);
+
+        // Handle different response structures
+        let items = [];
+        if (res.data.data) {
+          items = Array.isArray(res.data.data) ? res.data.data : [];
+        } else if (Array.isArray(res.data)) {
+          items = res.data;
+        }
+
+        const count = items.length || 0;
+        setCartCount(count);
+        console.log("✓ Cart count set to:", count);
+      } catch (error) {
+        console.error("Error fetching cart count:", error.message);
         setCartCount(0);
       }
     };
 
-    fetchCartCount();
+    const getUserId = () => {
+      if (userData?._id) {
+        console.log("Got userId from context:", userData._id);
+        return userData._id;
+      }
+      try {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const id = user?._id || user?.id;
+        if (id) console.log("Got userId from localStorage:", id);
+        return id;
+      } catch (e) {
+        return null;
+      }
+    };
 
-    const interval = setInterval(fetchCartCount, 5000);
-    return () => clearInterval(interval);
+    const userId = getUserId();
+    if (userId) {
+      fetchCartCount(userId);
+    } else {
+      console.log("No userId found, setting cart count to 0");
+      setCartCount(0);
+    }
+
+    const handleCartUpdate = () => {
+      console.log("Cart update event received");
+      const currentUserId = getUserId();
+      if (currentUserId) {
+        fetchCartCount(currentUserId);
+      }
+    };
+
+    window.addEventListener("cart-updated", handleCartUpdate);
+
+    const interval = setInterval(() => {
+      const currentUserId = getUserId();
+      if (currentUserId) {
+        fetchCartCount(currentUserId);
+      }
+    }, 3000);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("cart-updated", handleCartUpdate);
+    };
   }, [userData]);
 
   return (
@@ -202,30 +261,53 @@ function Header() {
                     }
                     id="basic-nav-dropdown"
                     className="login-action-btn-dropdown p-2 rounded-pill "
-                    style={{ background: "transparent", color: "white", backgroundColor: "#0f350f" }}
+                    style={{
+                      background: "transparent",
+                      color: "white",
+                      backgroundColor: "#0f350f",
+                    }}
                   >
                     {userData.role === "admin" && (
-                      <NavDropdown.Item as={NavLink} to="/admin" onClick={() => setExpanded(false)}>
+                      <NavDropdown.Item
+                        as={NavLink}
+                        to="/admin"
+                        onClick={() => setExpanded(false)}
+                      >
                         Admin Panel
                       </NavDropdown.Item>
                     )}
                     {userData.role === "vendor" && (
-                      <NavDropdown.Item as={NavLink} to="/vendor-dashboard" onClick={() => setExpanded(false)}>
+                      <NavDropdown.Item
+                        as={NavLink}
+                        to="/vendor-dashboard"
+                        onClick={() => setExpanded(false)}
+                      >
                         Vendor Dashboard
                       </NavDropdown.Item>
                     )}
-                    {userData.role === "customer" &&(
+                    {userData.role === "customer" && (
                       <>
-                        <NavDropdown.Item as={NavLink} to="/dashboard" onClick={() => setExpanded(false)}>
+                        <NavDropdown.Item
+                          as={NavLink}
+                          to="/dashboard"
+                          onClick={() => setExpanded(false)}
+                        >
                           Dashboard
                         </NavDropdown.Item>
-                        <NavDropdown.Item as={NavLink} to="/dashboard?tab=orders" onClick={() => setExpanded(false)}>
-                         My Orders
+                        <NavDropdown.Item
+                          as={NavLink}
+                          to="/dashboard?tab=orders"
+                          onClick={() => setExpanded(false)}
+                        >
+                          My Orders
                         </NavDropdown.Item>
-                        <NavDropdown.Item as={NavLink} to="/dashboard?tab=profile" onClick={() => setExpanded(false)}>
+                        <NavDropdown.Item
+                          as={NavLink}
+                          to="/dashboard?tab=profile"
+                          onClick={() => setExpanded(false)}
+                        >
                           Profile
                         </NavDropdown.Item>
-                       
                       </>
                     )}
                     <NavDropdown.Divider />
@@ -238,7 +320,7 @@ function Header() {
                         navigate("/login");
                       }}
                     >
-                 Disconnect
+                      Disconnect
                     </NavDropdown.Item>
                   </NavDropdown>
                 </div>
