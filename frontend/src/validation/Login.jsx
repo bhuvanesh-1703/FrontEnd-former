@@ -77,7 +77,7 @@ const Login = () => {
         }
       }
     } catch (err) {
-      Swal.fire("Authentication error", err.response?.data?.message, "error");
+      Swal.fire("Login Failed", err.response?.data?.message || "An error occurred during login", "warning");
     }
   };
 
