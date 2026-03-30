@@ -60,7 +60,7 @@ const Product = () => {
         .toLowerCase()
         .includes(lowerQuery);
       const categoryMatches = matchingCategoryIds.includes(
-        Number(product.categories_id),
+        product.categories_id?.id || product.categories_id?.toString() || product.categories_id,
       );
       return productNameMatches || categoryMatches;
     });

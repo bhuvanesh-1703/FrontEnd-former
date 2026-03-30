@@ -51,7 +51,7 @@ const Login = () => {
       }
 
       const token = res.data?.data?.token;
-      const user = res.data?.data?.userData;
+      const user = res.data?.data?.user;
 
       if (token) localStorage.setItem("token", token);
       if (user) {

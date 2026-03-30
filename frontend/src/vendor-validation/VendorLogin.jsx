@@ -42,8 +42,8 @@ const VendorLogin = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
         
-        // Also update the global AuthContext if possible
-        window.dispatchEvent(new Event("storage")); // Trigger storage event for other tabs
+      
+        window.dispatchEvent(new Event("storage")); 
         
         Swal.fire({
           icon: "success",
