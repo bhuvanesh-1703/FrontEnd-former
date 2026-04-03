@@ -84,7 +84,7 @@ const Category = () => {
       subcategory: cat.subcategory_name,
       description: cat.description || "",
     });
-    setEditId(cat.id);
+    setEditId(cat._id);
     setIsEditMode(true);
     setIsAddMode(true);
   };
@@ -114,11 +114,13 @@ const Category = () => {
 
   return (
     <div className="category-container">
-      <div className="category-header" >
-        <h2 style={{color:"#2D5A27"}}>{isEditMode ? "Edit Category" : "Manage Categories"}</h2>
+      <div className="category-header">
+        <h2 style={{ color: "#2D5A27" }}>
+          {isEditMode ? "Edit Category" : "Manage Categories"}
+        </h2>
         <button
           className="add-btn"
-          style={{marginTop:"15px"}}
+          style={{ marginTop: "15px" }}
           onClick={() => (isAddMode ? resetForm() : setIsAddMode(true))}
         >
           {isAddMode ? "View All Categories" : "Add New Category"}
@@ -198,7 +200,7 @@ const Category = () => {
               </thead>
               <tbody>
                 {categories.map((cat, index) => (
-                  <tr key={cat.id}>
+                  <tr key={cat._id}>
                     <td>{index + 1}</td>
                     <td>
                       <div className="table-img-wrapper">
@@ -229,7 +231,7 @@ const Category = () => {
                         </button>
                         <button
                           className="table-delete-btn"
-                          onClick={() => handleDelete(cat.id)}
+                          onClick={() => handleDelete(cat._id)}
                           title="Delete"
                         >
                           <i className="fas fa-trash"></i> Delete
