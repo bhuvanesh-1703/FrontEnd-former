@@ -39,7 +39,7 @@ const AddProductVendor = () => {
     const checkVendorStatus = async () => {
       try {
         const token = localStorage.getItem("vendorToken");
-        const res = await axios.get(`${API_URL}/api/vendor/${vendorData.id}`, {
+        const res = await axios.get(`${API_URL}/api/vendor/${vendorData._id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setVendorStatus(res.data.data?.status || "pending");
@@ -96,7 +96,7 @@ const AddProductVendor = () => {
     formData.append("stock", values.stock);
     formData.append("category", values.category);
     formData.append("description", values.description);
-    formData.append("vendor_id", vendorData.id);
+    formData.append("vendor_id", vendorData._id);
     formData.append("added_by", "vendor");
 
     for (let i = 0; i < files.length; i++) {

@@ -39,7 +39,7 @@ const VendorProducts = () => {
     try {
       setLoadingProducts(true);
       const res = await axios.get(
-        `${API_URL}/api/product?vendorId=${vendorData.id}`,
+        `${API_URL}/api/product?vendorId=${vendorData._id}`,
       );
       setProducts(res.data.product || []);
     } catch (err) {
@@ -184,7 +184,7 @@ const VendorProducts = () => {
     formData.append("stock", values.stock);
     formData.append("category", values.category);
     formData.append("description", values.description);
-    formData.append("vendor_id", vendorData.id);
+    formData.append("vendor_id", vendorData._id);
     formData.append("added_by", "vendor");
 
     for (let i = 0; i < files.length; i++) {

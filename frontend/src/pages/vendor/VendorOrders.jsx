@@ -17,7 +17,7 @@ const VendorOrders = () => {
   const fetchOrders = async () => {
     try {
       const res = await axios.get(
-        `${API_URL}/api/orders?vendorId=${vendorData.id}`,
+        `${API_URL}/api/orders?vendorId=${vendorData._id}`,
       );
       setOrders(res.data.data || []);
       setLoading(false);

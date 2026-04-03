@@ -28,14 +28,14 @@ const VendorDashboard = () => {
       try {
         // Fetch products
         const ProductResponse = await axios.get(
-          `${API_URL}/api/product?vendorId=${vendorData.id}`,
+          `${API_URL}/api/product?vendorId=${vendorData._id}`,
         );
         const fetchedProducts = ProductResponse.data.product;
         setProducts(fetchedProducts.slice(0, 5)); // Just top 5
 
         // Fetch orders
         const OrderResponse = await axios.get(
-          `${API_URL}/api/orders?vendorId=${vendorData.id}`,
+          `${API_URL}/api/orders?vendorId=${vendorData._id}`,
         );
         const fetchedOrders = OrderResponse.data.data || [];
         setOrders(fetchedOrders.slice(0, 5));
