@@ -98,15 +98,7 @@ function Header() {
 
     window.addEventListener("cart-updated", handleCartUpdate);
 
-    const interval = setInterval(() => {
-      const currentUserId = getUserId();
-      if (currentUserId) {
-        fetchCartCount(currentUserId);
-      }
-    }, 3000);
-
     return () => {
-      clearInterval(interval);
       window.removeEventListener("cart-updated", handleCartUpdate);
     };
   }, [userData]);
