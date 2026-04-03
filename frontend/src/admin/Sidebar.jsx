@@ -8,6 +8,7 @@ import {
   FaEnvelope,
   FaUsers,
   FaUser,
+  FaStore,
 } from "react-icons/fa";
 import "../Admin-Css-Folder/Sidebar.css";
 
@@ -40,6 +41,13 @@ const Sidebar = () => {
           <NavLink to="/admin/orders" className="sidebar-link">
             <FaShoppingCart className="sidebar-icon" />
             <span>Manage Orders</span>
+          </NavLink>
+        </li>
+
+        <li className="sidebar-item">
+          <NavLink to="/admin/vendors" className="sidebar-link">
+            <FaStore className="sidebar-icon" />
+            <span>Manage Vendors</span>
           </NavLink>
         </li>
 

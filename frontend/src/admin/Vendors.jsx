@@ -79,7 +79,7 @@ const Vendors = () => {
           </thead>
           <tbody>
             {vendors.map((vendor) => (
-              <tr key={vendor.id}>
+              <tr key={vendor._id}>
                 <td>{vendor.shop_name}</td>
                 <td>{vendor.username}</td>
                 <td>{vendor.email}</td>
@@ -111,7 +111,7 @@ const Vendors = () => {
                       <button
                         className="btn btn-sm btn-success"
                         onClick={() =>
-                          handleStatusUpdate(vendor.id, "approved")
+                          handleStatusUpdate(vendor._id, "approved")
                         }
                         title="Approve"
                       >
@@ -120,7 +120,7 @@ const Vendors = () => {
                       <button
                         className="btn btn-sm btn-danger"
                         onClick={() =>
-                          handleStatusUpdate(vendor.id, "rejected")
+                          handleStatusUpdate(vendor._id, "rejected")
                         }
                         title="Reject"
                       >
@@ -131,10 +131,10 @@ const Vendors = () => {
                   {vendor.status !== "pending" && (
                     <button
                       className="btn btn-sm btn-outline-secondary"
-                      onClick={() => handleStatusUpdate(vendor.id, "pending")}
+                      onClick={() => handleStatusUpdate(vendor._id, "pending")}
                       title="Reset to Pending"
                     >
-                    changes
+                      Reset
                     </button>
                   )}
                 </td>
