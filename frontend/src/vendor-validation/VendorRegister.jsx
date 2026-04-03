@@ -59,7 +59,7 @@ const VendorRegister = () => {
 
     try {
       const res = await axios.post(
-        `${API_BASE}/api/vendor/register`,
+        `${API_URL}/api/vendor/register`,
         formData,
         {
           headers: {
