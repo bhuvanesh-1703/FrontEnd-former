@@ -65,10 +65,10 @@ const ViewProduct = () => {
         return;
       }
 
-      const userId = storedUserData.id;
+      const userId = storedUserData._id;
       const response = await axios.post(`${API_URL}/api/cart`, {
         userId: userId,
-        productId: product.id,
+        productId: product._id,
         quantity: 1,
       });
 
