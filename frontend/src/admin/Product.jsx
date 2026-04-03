@@ -125,7 +125,7 @@ const Product = () => {
       category: product.categories_id,
       description: product.description,
     });
-    setEditId(product.id);
+    setEditId(product._id);
     setIsEditMode(true);
     setIsAddMode(true);
   };
@@ -238,7 +238,7 @@ const Product = () => {
               >
                 <option value="">Select Category</option>
                 {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
+                  <option key={cat._id} value={cat._id}>
                     {cat.category_name}
                   </option>
                 ))}
@@ -296,7 +296,7 @@ const Product = () => {
           <tbody>
             {products.length > 0 ? (
               products.map((product, index) => (
-                <tr key={product.id}>
+                <tr key={product._id}>
                   <td>{index + 1}</td>
                   <td>
                     {product.image ? (
@@ -371,11 +371,11 @@ const Product = () => {
                             className="edit-btn"
                             style={{
                               background: "#10b981",
-                               color:"white",
+                              color: "white",
                               padding: "5px 10px",
                             }}
                             onClick={() =>
-                              handleStatusUpdate(product.id, "approved")
+                              handleStatusUpdate(product._id, "approved")
                             }
                           >
                             Approve
@@ -384,11 +384,11 @@ const Product = () => {
                             className="delete-btn"
                             style={{
                               background: "#ef4444",
-                              color:"white",
+                              color: "white",
                               padding: "5px 10px",
                             }}
                             onClick={() =>
-                              handleStatusUpdate(product.id, "rejected")
+                              handleStatusUpdate(product._id, "rejected")
                             }
                           >
                             Reject
@@ -406,7 +406,7 @@ const Product = () => {
                       <button
                         className="delete-btn"
                         style={{ padding: "5px 10px" }}
-                        onClick={() => handleDelete(product.id)}
+                        onClick={() => handleDelete(product._id)}
                       >
                         Delete
                       </button>
