@@ -327,7 +327,7 @@ const VendorProducts = () => {
               >
                 <option value="">Select Category</option>
                 {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
+                  <option key={cat._id} value={cat._id}>
                     {cat.category_name}
                   </option>
                 ))}

@@ -89,6 +89,22 @@ const AddProductVendor = () => {
     if (!values.category)
       return Swal.fire("Error", "Please select a category", "error");
 
+    if (!values.name)
+      return Swal.fire("Error", "Please enter product name", "error");
+
+    if (!values.price || values.price <= 0)
+      return Swal.fire("Error", "Please enter valid price", "error");
+
+    if (!values.stock || values.stock <= 0)
+      return Swal.fire("Error", "Please enter valid stock quantity", "error");
+
+    if (!files || files.length === 0)
+      return Swal.fire(
+        "Error",
+        "Please upload at least one product image",
+        "error",
+      );
+
     setLoading(true);
     const formData = new FormData();
     formData.append("name", values.name);
@@ -195,6 +211,7 @@ const AddProductVendor = () => {
               className="form-control"
               placeholder="e.g. Fresh Organic Apples"
               required
+              value={values.name}
               onChange={handleInput}
             />
           </div>
@@ -212,11 +229,12 @@ const AddProductVendor = () => {
               name="category"
               className="form-control"
               required
+              value={values.category}
               onChange={handleInput}
             >
               <option value="">Select Category</option>
               {categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>
+                <option key={cat._id} value={cat._id}>
                   {cat.category_name}
                 </option>
               ))}
@@ -240,6 +258,7 @@ const AddProductVendor = () => {
                 className="form-control"
                 placeholder="0.00"
                 required
+                value={values.price}
                 onChange={handleInput}
               />
             </div>
@@ -260,6 +279,7 @@ const AddProductVendor = () => {
               className="form-control"
               placeholder="0"
               required
+              value={values.stock}
               onChange={handleInput}
             />
           </div>
@@ -279,6 +299,7 @@ const AddProductVendor = () => {
               rows="4"
               placeholder="Describe your organic product..."
               required
+              value={values.description}
               onChange={handleInput}
             ></textarea>
           </div>

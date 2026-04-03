@@ -78,7 +78,7 @@ const VendorDashboard = () => {
     },
     {
       label: "Active Orders",
-      value: stats.orders, // For demo, using total orders
+      value: stats.orders, 
       icon: <FiActivity />,
       color: "#9C27B0",
       bgColor: "#F3E5F5",
