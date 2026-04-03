@@ -42,9 +42,7 @@ const Checkout = () => {
         navigate("/login");
         return;
       }
-      const response = await axios.get(
-        `${API_URL}/api/cart?userId=${userId}`,
-      );
+      const response = await axios.get(`${API_URL}/api/cart?userId=${userId}`);
       setCart(response.data.data || []);
     } catch (error) {
       console.error("Failed to fetch cart:", error);
@@ -108,10 +106,7 @@ const Checkout = () => {
         })),
       };
 
-      const response = await axios.post(
-        `${API_URL}/api/orders`,
-        orderData,
-      );
+      const response = await axios.post(`${API_URL}/api/orders`, orderData);
 
       if (response.data.success) {
         // Success Message
@@ -307,7 +302,7 @@ const Checkout = () => {
                 {cart.map((item) => (
                   <div key={item.id} className="summary-item-small">
                     <img
-                      src={`${API_URL}/uploads/${item.image.split(",")[0]}`}
+                      src={`${API_URL}/uploads/${item.image && item.image.length > 0 ? item.image[0] : ""}`}
                       alt={item.name}
                       className="summary-img"
                     />

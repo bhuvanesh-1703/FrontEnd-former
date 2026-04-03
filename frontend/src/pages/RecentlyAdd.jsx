@@ -129,7 +129,7 @@ const Showcase = () => {
                 <div className="product-image-wrapper">
                   <Link to={`/productdetails/${product.id}`}>
                     <img
-                      src={`${API_URL}/uploads/${product.image.split(",")[0]}`}
+                      src={`${API_URL}/uploads/${product.image && product.image.length > 0 ? product.image[0] : ""}`}
                       alt={product.name}
                       className="product-img"
                       loading="lazy"

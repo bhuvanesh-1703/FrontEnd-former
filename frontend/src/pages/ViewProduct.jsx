@@ -94,7 +94,7 @@ const ViewProduct = () => {
     }
   };
 
-  const images = product.image ? product.image.split(",") : [];
+  const images = product.image ? product.image : [];
 
   return (
     <div className="view-product-wrapper">

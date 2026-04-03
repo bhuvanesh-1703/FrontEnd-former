@@ -299,9 +299,9 @@ const Product = () => {
                 <tr key={product._id}>
                   <td>{index + 1}</td>
                   <td>
-                    {product.image ? (
+                    {product.image && product.image.length > 0 ? (
                       <img
-                        src={`${API_URL}/uploads/${product.image.split(",")[0]}`}
+                        src={`${API_URL}/uploads/${product.image[0]}`}
                         alt={product.name}
                         className="product-img-thumb"
                       />

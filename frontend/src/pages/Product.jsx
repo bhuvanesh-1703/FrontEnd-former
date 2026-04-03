@@ -60,7 +60,9 @@ const Product = () => {
         .toLowerCase()
         .includes(lowerQuery);
       const categoryMatches = matchingCategoryIds.includes(
-        product.categories_id?.id || product.categories_id?.toString() || product.categories_id,
+        product.categories_id?.id ||
+          product.categories_id?.toString() ||
+          product.categories_id,
       );
       return productNameMatches || categoryMatches;
     });
@@ -158,9 +160,9 @@ const Product = () => {
                 <article className="luxury-product-card">
                   {/* IMAGE */}
                   <div className="product-image-wrapper">
-                    {product.image ? (
+                    {product.image && product.image.length > 0 ? (
                       <img
-                        src={`${API_URL}/uploads/${product.image.split(",")[0]}`}
+                        src={`${API_URL}/uploads/${product.image[0]}`}
                         alt={product.name}
                         className="product-img"
                       />
