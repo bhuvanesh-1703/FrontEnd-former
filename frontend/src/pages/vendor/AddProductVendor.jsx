@@ -16,6 +16,8 @@ const AddProductVendor = () => {
   });
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [vendorStatus, setVendorStatus] = useState("pending");
+  const [statusLoading, setStatusLoading] = useState(true);
 
   const navigate = useNavigate();
   const vendorData = JSON.parse(localStorage.getItem("vendor"));
@@ -33,6 +35,23 @@ const AddProductVendor = () => {
       return;
     }
 
+    // Fetch vendor status to check if approved
+    const checkVendorStatus = async () => {
+      try {
+        const token = localStorage.getItem("vendorToken");
+        const res = await axios.get(`${API_URL}/api/vendor/${vendorData.id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setVendorStatus(res.data.data?.status || "pending");
+      } catch (err) {
+        console.error("Failed to fetch vendor status:", err);
+        // Fallback to localStorage status if API fails
+        setVendorStatus(vendorData.status || "pending");
+      } finally {
+        setStatusLoading(false);
+      }
+    };
+
     const fetchCategories = async () => {
       try {
         const res = await axios.get(`${API_URL}/api/categories`);
@@ -41,6 +60,8 @@ const AddProductVendor = () => {
         console.error("Failed to fetch categories:", err);
       }
     };
+
+    checkVendorStatus();
     fetchCategories();
   }, []);
 
@@ -54,6 +75,17 @@ const AddProductVendor = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check vendor approval status before submission
+    if (vendorStatus !== "approved") {
+      Swal.fire(
+        "Access Denied",
+        `Your vendor account is currently "${vendorStatus}". You can only add products after admin approval. Please check your email for approval status or contact support.`,
+        "warning",
+      );
+      return;
+    }
+
     if (!values.category)
       return Swal.fire("Error", "Please select a category", "error");
 
@@ -72,10 +104,7 @@ const AddProductVendor = () => {
     }
 
     try {
-      const res = await axios.post(
-        `${API_URL}/api/product`,
-        formData,
-      );
+      const res = await axios.post(`${API_URL}/api/product`, formData);
       if (res.data.success) {
         Swal.fire({
           icon: "success",
@@ -86,7 +115,11 @@ const AddProductVendor = () => {
         navigate("/vendor-products");
       }
     } catch (err) {
-      Swal.fire("Error", "Submission failed. Please try again.", "error");
+      Swal.fire(
+        "Error",
+        err.response?.data?.message || "Submission failed. Please try again.",
+        "error",
+      );
     } finally {
       setLoading(false);
     }
@@ -112,7 +145,39 @@ const AddProductVendor = () => {
       >
         <h3 className="section-title">Add New Product</h3>
       </div>
-      <form onSubmit={handleSubmit}>
+
+      {statusLoading ? (
+        <div style={{ textAlign: "center", padding: "40px" }}>
+          <p>Checking vendor status...</p>
+        </div>
+      ) : vendorStatus !== "approved" ? (
+        <div
+          style={{
+            padding: "20px",
+            background: "#fff3cd",
+            border: "1px solid #ffc107",
+            borderRadius: "8px",
+            marginBottom: "20px",
+            color: "#856404",
+          }}
+        >
+          <strong>⚠️ Account Not Approved</strong>
+          <p style={{ marginTop: "10px", marginBottom: "0" }}>
+            Your vendor account is currently{" "}
+            <strong>"{vendorStatus.toUpperCase()}"</strong>. You can only add
+            and sell products after admin approval.
+          </p>
+          <p style={{ marginTop: "10px", marginBottom: "0", fontSize: "14px" }}>
+            Please check your email for approval status or contact support at
+            support@farmaura.com
+          </p>
+        </div>
+      ) : null}
+
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: vendorStatus === "approved" ? "block" : "none" }}
+      >
         <div className="row">
           <div className="col-md-6 mb-4">
             <label
