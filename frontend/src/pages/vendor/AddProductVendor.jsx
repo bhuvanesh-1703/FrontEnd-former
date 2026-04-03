@@ -55,6 +55,7 @@ const AddProductVendor = () => {
     const fetchCategories = async () => {
       try {
         const res = await axios.get(`${API_URL}/api/categories`);
+        console.log("Categories fetched:", res.data.categories);
         setCategories(res.data.categories || []);
       } catch (err) {
         console.error("Failed to fetch categories:", err);
@@ -114,6 +115,17 @@ const AddProductVendor = () => {
     formData.append("description", values.description);
     formData.append("vendor_id", vendorData._id);
     formData.append("added_by", "vendor");
+
+    console.log("Form values before submission:", {
+      name: values.name,
+      price: values.price,
+      stock: values.stock,
+      category: values.category,
+      description: values.description,
+      vendor_id: vendorData._id,
+      added_by: "vendor",
+      files: files.length,
+    });
 
     for (let i = 0; i < files.length; i++) {
       formData.append("image", files[i]);
