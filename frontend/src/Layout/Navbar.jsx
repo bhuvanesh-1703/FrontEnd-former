@@ -41,12 +41,12 @@ function Header() {
           return;
         }
 
-        console.log("Fetching cart for userId:", userIdToUse);
+        //console.log("Fetching cart for userId:", userIdToUse);
         const res = await axios.get(
           `${API_URL}/api/cart?userId=${userIdToUse}`,
         );
 
-        console.log("Cart API response:", res.data);
+       // console.log("Cart API response:", res.data);
 
         // Handle different response structures
         let items = [];
