@@ -141,7 +141,7 @@ const Cart = () => {
                 >
                   <div className="cart-item-image-wrapper">
                     <img
-                      src={`${API_URL}/uploads/${item.image.split(",")[0]}`}
+                      src={`${API_URL}/uploads/${item.image && item.image.length > 0 ? item.image[0] : ""}`}
                       alt={item.name}
                       className="cart-item-image"
                     />

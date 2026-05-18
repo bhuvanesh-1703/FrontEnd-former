@@ -16,6 +16,8 @@ const AddProductVendor = () => {
   });
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [vendorStatus, setVendorStatus] = useState("pending");
+  const [statusLoading, setStatusLoading] = useState(true);
 
   const navigate = useNavigate();
   const vendorData = JSON.parse(localStorage.getItem("vendor"));
@@ -33,14 +35,34 @@ const AddProductVendor = () => {
       return;
     }
 
+    // Fetch vendor status to check if approved
+    const checkVendorStatus = async () => {
+      try {
+        const token = localStorage.getItem("vendorToken");
+        const res = await axios.get(`${API_URL}/api/vendor/${vendorData._id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setVendorStatus(res.data.data?.status || "pending");
+      } catch (err) {
+        console.error("Failed to fetch vendor status:", err);
+        // Fallback to localStorage status if API fails
+        setVendorStatus(vendorData.status || "pending");
+      } finally {
+        setStatusLoading(false);
+      }
+    };
+
     const fetchCategories = async () => {
       try {
         const res = await axios.get(`${API_URL}/api/categories`);
+        console.log("Categories fetched:", res.data.categories);
         setCategories(res.data.categories || []);
       } catch (err) {
         console.error("Failed to fetch categories:", err);
       }
     };
+
+    checkVendorStatus();
     fetchCategories();
   }, []);
 
@@ -54,8 +76,35 @@ const AddProductVendor = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check vendor approval status before submission
+    if (vendorStatus !== "approved") {
+      Swal.fire(
+        "Access Denied",
+        `Your vendor account is currently "${vendorStatus}". You can only add products after admin approval. Please check your email for approval status or contact support.`,
+        "warning",
+      );
+      return;
+    }
+
     if (!values.category)
       return Swal.fire("Error", "Please select a category", "error");
+
+    if (!values.name)
+      return Swal.fire("Error", "Please enter product name", "error");
+
+    if (!values.price || values.price <= 0)
+      return Swal.fire("Error", "Please enter valid price", "error");
+
+    if (!values.stock || values.stock <= 0)
+      return Swal.fire("Error", "Please enter valid stock quantity", "error");
+
+    if (!files || files.length === 0)
+      return Swal.fire(
+        "Error",
+        "Please upload at least one product image",
+        "error",
+      );
 
     setLoading(true);
     const formData = new FormData();
@@ -64,18 +113,26 @@ const AddProductVendor = () => {
     formData.append("stock", values.stock);
     formData.append("category", values.category);
     formData.append("description", values.description);
-    formData.append("vendor_id", vendorData.id);
+    formData.append("vendor_id", vendorData._id);
     formData.append("added_by", "vendor");
+
+    console.log("Form values before submission:", {
+      name: values.name,
+      price: values.price,
+      stock: values.stock,
+      category: values.category,
+      description: values.description,
+      vendor_id: vendorData._id,
+      added_by: "vendor",
+      files: files.length,
+    });
 
     for (let i = 0; i < files.length; i++) {
       formData.append("image", files[i]);
     }
 
     try {
-      const res = await axios.post(
-        `${API_URL}/api/product`,
-        formData,
-      );
+      const res = await axios.post(`${API_URL}/api/product`, formData);
       if (res.data.success) {
         Swal.fire({
           icon: "success",
@@ -86,7 +143,11 @@ const AddProductVendor = () => {
         navigate("/vendor-products");
       }
     } catch (err) {
-      Swal.fire("Error", "Submission failed. Please try again.", "error");
+      Swal.fire(
+        "Error",
+        err.response?.data?.message || "Submission failed. Please try again.",
+        "error",
+      );
     } finally {
       setLoading(false);
     }
@@ -112,7 +173,39 @@ const AddProductVendor = () => {
       >
         <h3 className="section-title">Add New Product</h3>
       </div>
-      <form onSubmit={handleSubmit}>
+
+      {statusLoading ? (
+        <div style={{ textAlign: "center", padding: "40px" }}>
+          <p>Checking vendor status...</p>
+        </div>
+      ) : vendorStatus !== "approved" ? (
+        <div
+          style={{
+            padding: "20px",
+            background: "#fff3cd",
+            border: "1px solid #ffc107",
+            borderRadius: "8px",
+            marginBottom: "20px",
+            color: "#856404",
+          }}
+        >
+          <strong>⚠️ Account Not Approved</strong>
+          <p style={{ marginTop: "10px", marginBottom: "0" }}>
+            Your vendor account is currently{" "}
+            <strong>"{vendorStatus.toUpperCase()}"</strong>. You can only add
+            and sell products after admin approval.
+          </p>
+          <p style={{ marginTop: "10px", marginBottom: "0", fontSize: "14px" }}>
+            Please check your email for approval status or contact support at
+            support@farmaura.com
+          </p>
+        </div>
+      ) : null}
+
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: vendorStatus === "approved" ? "block" : "none" }}
+      >
         <div className="row">
           <div className="col-md-6 mb-4">
             <label
@@ -130,6 +223,7 @@ const AddProductVendor = () => {
               className="form-control"
               placeholder="e.g. Fresh Organic Apples"
               required
+              value={values.name}
               onChange={handleInput}
             />
           </div>
@@ -147,11 +241,12 @@ const AddProductVendor = () => {
               name="category"
               className="form-control"
               required
+              value={values.category}
               onChange={handleInput}
             >
               <option value="">Select Category</option>
               {categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>
+                <option key={cat._id} value={cat._id}>
                   {cat.category_name}
                 </option>
               ))}
@@ -175,6 +270,7 @@ const AddProductVendor = () => {
                 className="form-control"
                 placeholder="0.00"
                 required
+                value={values.price}
                 onChange={handleInput}
               />
             </div>
@@ -195,6 +291,7 @@ const AddProductVendor = () => {
               className="form-control"
               placeholder="0"
               required
+              value={values.stock}
               onChange={handleInput}
             />
           </div>
@@ -214,6 +311,7 @@ const AddProductVendor = () => {
               rows="4"
               placeholder="Describe your organic product..."
               required
+              value={values.description}
               onChange={handleInput}
             ></textarea>
           </div>

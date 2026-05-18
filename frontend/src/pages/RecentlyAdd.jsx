@@ -43,11 +43,11 @@ const Showcase = () => {
         return;
       }
 
-      const userId = storedUserData.id || storedUserData._id;
-      const quantity = quantities[product.id] || 1;
+      const userId = storedUserData._id;
+      const quantity = quantities[product._id] || 1;
       const response = await axios.post(`${API_URL}/api/cart`, {
         userId: userId,
-        productId: product.id,
+        productId: product._id,
         quantity: quantity,
       });
 
@@ -129,7 +129,7 @@ const Showcase = () => {
                 <div className="product-image-wrapper">
                   <Link to={`/productdetails/${product.id}`}>
                     <img
-                      src={`${API_URL}/uploads/${product.image.split(",")[0]}`}
+                      src={`${API_URL}/uploads/${product.image && product.image.length > 0 ? product.image[0] : ""}`}
                       alt={product.name}
                       className="product-img"
                       loading="lazy"
@@ -172,18 +172,18 @@ const Showcase = () => {
                     <div className="luxury-qty-pill">
                       <button
                         className="qty-btn"
-                        onClick={() => handleQuantityChange(product.id, -1)}
+                        onClick={() => handleQuantityChange(product._id, -1)}
                       >
                         <HiMinus />
                       </button>
 
                       <span className="qty-val">
-                        {quantities[product.id] || 1}
+                        {quantities[product._id] || 1}
                       </span>
 
                       <button
                         className="qty-btn"
-                        onClick={() => handleQuantityChange(product.id, 1)}
+                        onClick={() => handleQuantityChange(product._id, 1)}
                       >
                         <HiPlus />
                       </button>

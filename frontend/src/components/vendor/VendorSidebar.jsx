@@ -8,6 +8,7 @@ import {
   FiSettings,
   FiLogOut,
   FiChevronRight,
+  FiPlus,
 } from "react-icons/fi";
 import { GiFruiting } from "react-icons/gi";
 import Swal from "sweetalert2";
@@ -37,6 +38,7 @@ const VendorSidebar = () => {
   const navItems = [
     { path: "/vendor-dashboard", icon: <FiGrid />, label: "Dashboard" },
     { path: "/vendor-products", icon: <FiPackage />, label: "Products" },
+    { path: "/vendor-add-product", icon: <FiPlus />, label: "Add Product" },
     { path: "/vendor-orders", icon: <FiShoppingBag />, label: "Orders" },
     { path: "/vendor-profile", icon: <FiUser />, label: "Profile" },
     { path: "#", icon: <FiSettings />, label: "Settings" },

@@ -60,7 +60,9 @@ const Product = () => {
         .toLowerCase()
         .includes(lowerQuery);
       const categoryMatches = matchingCategoryIds.includes(
-        Number(product.categories_id),
+        product.categories_id?.id ||
+          product.categories_id?.toString() ||
+          product.categories_id,
       );
       return productNameMatches || categoryMatches;
     });
@@ -94,11 +96,11 @@ const Product = () => {
         return;
       }
 
-      const userId = storedUserData.id || storedUserData._id;
-      const quantity = quantities[product.id] || 1;
+      const userId = storedUserData._id;
+      const quantity = quantities[product._id] || 1;
       const response = await axios.post(`${API_URL}/api/cart`, {
         userId: userId,
-        productId: product.id,
+        productId: product._id,
         quantity: quantity,
       });
 
@@ -158,9 +160,9 @@ const Product = () => {
                 <article className="luxury-product-card">
                   {/* IMAGE */}
                   <div className="product-image-wrapper">
-                    {product.image ? (
+                    {product.image && product.image.length > 0 ? (
                       <img
-                        src={`${API_URL}/uploads/${product.image.split(",")[0]}`}
+                        src={`${API_URL}/uploads/${product.image[0]}`}
                         alt={product.name}
                         className="product-img"
                       />
@@ -204,18 +206,18 @@ const Product = () => {
                       <div className="luxury-qty-pill">
                         <button
                           className="qty-btn"
-                          onClick={() => handleQty(product.id, -1)}
+                          onClick={() => handleQty(product._id, -1)}
                         >
                           <HiMinus />
                         </button>
 
                         <span className="qty-val">
-                          {quantities[product.id] || 1}
+                          {quantities[product._id] || 1}
                         </span>
 
                         <button
                           className="qty-btn"
-                          onClick={() => handleQty(product.id, 1)}
+                          onClick={() => handleQty(product._id, 1)}
                         >
                           <HiPlus />
                         </button>

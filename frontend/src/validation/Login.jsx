@@ -51,7 +51,7 @@ const Login = () => {
       }
 
       const token = res.data?.data?.token;
-      const user = res.data?.data?.userData;
+      const user = res.data?.data?.user;
 
       if (token) localStorage.setItem("token", token);
       if (user) {
@@ -77,7 +77,7 @@ const Login = () => {
         }
       }
     } catch (err) {
-      Swal.fire("Authentication error", err.response?.data?.message, "error");
+      Swal.fire("Login Failed", err.response?.data?.message || "An error occurred during login", "warning");
     }
   };
 

@@ -39,7 +39,7 @@ const VendorProducts = () => {
     try {
       setLoadingProducts(true);
       const res = await axios.get(
-        `${API_URL}/api/product?vendorId=${vendorData.id}`,
+        `${API_URL}/api/product?vendorId=${vendorData._id}`,
       );
       setProducts(res.data.product || []);
     } catch (err) {
@@ -184,7 +184,7 @@ const VendorProducts = () => {
     formData.append("stock", values.stock);
     formData.append("category", values.category);
     formData.append("description", values.description);
-    formData.append("vendor_id", vendorData.id);
+    formData.append("vendor_id", vendorData._id);
     formData.append("added_by", "vendor");
 
     for (let i = 0; i < files.length; i++) {
@@ -192,10 +192,7 @@ const VendorProducts = () => {
     }
 
     try {
-      const res = await axios.post(
-        `${API_URL}/api/product`,
-        formData,
-      );
+      const res = await axios.post(`${API_URL}/api/product`, formData);
       if (res.data.success) {
         Swal.fire({
           icon: "success",
@@ -330,7 +327,7 @@ const VendorProducts = () => {
               >
                 <option value="">Select Category</option>
                 {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
+                  <option key={cat._id} value={cat._id}>
                     {cat.category_name}
                   </option>
                 ))}
@@ -647,7 +644,7 @@ const VendorProducts = () => {
                     >
                       {product.image ? (
                         <img
-                          src={`${API_URL}/uploads/${product.image.split(",")[0]}`}
+                          src={`${API_URL}/uploads/${product.image && product.image.length > 0 ? product.image[0] : ""}`}
                           alt=""
                           style={{
                             width: "50px",

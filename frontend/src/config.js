@@ -1,3 +1,3 @@
-const API_URL = import.meta.env.VITE_API_URL || "https://final-farmer-backend.onrender.com";
+const API_URL = "https://final-farmer-backend1.onrender.com"||"http://localhost:5100"
 
 export default API_URL;
