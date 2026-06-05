@@ -1,3 +1,6 @@
-const API_URL = "https://final-farmer-backend1.onrender.com"||"http://localhost:5100"
+const API_URL = 
+  window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "http://localhost:5100"
+    : "https://backend-farmer-ql6w.onrender.com";
 
 export default API_URL;
