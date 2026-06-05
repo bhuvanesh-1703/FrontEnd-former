@@ -40,7 +40,7 @@ const Footer = () => {
           <div className="footer-grain-overlay" aria-hidden="true" />
           <Container>
             <Row className="gy-5">
-              {/* ── Brand Column ─────────────────────────── */}
+            
               <Col lg={4} md={12}>
                 <div className="footer-brand-premium">
                   <div className="brand-logo-box">
@@ -133,7 +133,7 @@ const Footer = () => {
                 </ul>
               </Col>
 
-              {/* ── Deep Roots Links ──────────────────────── */}
+              
               <Col lg={2} md={4} xs={6}>
                 <h5 className="column-title">Deep Roots</h5>
                 <ul className="premium-links">
