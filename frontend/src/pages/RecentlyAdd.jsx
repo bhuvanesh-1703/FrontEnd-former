@@ -43,11 +43,12 @@ const Showcase = () => {
         return;
       }
 
-      const userId = storedUserData._id;
-      const quantity = quantities[product._id] || 1;
+      const userId = storedUserData.id || storedUserData._id;
+      const productId = product._id || product.id;
+      const quantity = quantities[productId] || 1;
       const response = await axios.post(`${API_URL}/api/cart`, {
         userId: userId,
-        productId: product._id,
+        productId: productId,
         quantity: quantity,
       });
 

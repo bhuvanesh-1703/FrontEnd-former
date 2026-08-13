@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
 import { HiOutlineShoppingCart, HiCheckCircle } from "react-icons/hi";
+import Swal from "sweetalert2";
 import "../css/ViewProduct.css";
 
 const ViewProduct = () => {
@@ -65,10 +66,11 @@ const ViewProduct = () => {
         return;
       }
 
-      const userId = storedUserData._id;
+      const userId = storedUserData.id || storedUserData._id;
+      const productId = product._id || product.id;
       const response = await axios.post(`${API_URL}/api/cart`, {
         userId: userId,
-        productId: product._id,
+        productId: productId,
         quantity: 1,
       });
 

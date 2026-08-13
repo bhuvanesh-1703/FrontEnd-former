@@ -35,9 +35,13 @@ const CategoryView = () => {
 
   useEffect(() => {
     if (products.length > 0 && id) {
-      const filtered = products.filter(
-        (prod) => Number(prod.categories_id) === Number(id),
-      );
+      const filtered = products.filter((prod) => {
+        const categoryId =
+          prod.categories_id?._id ||
+          prod.categories_id?.id ||
+          prod.categories_id;
+        return String(categoryId) === String(id);
+      });
       setFilteredProducts(filtered);
     }
   }, [products, id]);
@@ -71,11 +75,12 @@ const CategoryView = () => {
         return;
       }
 
-      const userId = storedUserData._id;
-      const quantity = quantities[product._id] || 1;
+      const userId = storedUserData.id || storedUserData._id;
+      const productId = product._id || product.id;
+      const quantity = quantities[productId] || 1;
       const response = await axios.post(`${API_URL}/api/cart`, {
         userId: userId,
-        productId: product._id,
+        productId: productId,
         quantity: quantity,
       });
 

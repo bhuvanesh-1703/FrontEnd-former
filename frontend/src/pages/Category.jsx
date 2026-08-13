@@ -35,9 +35,9 @@ const Category = () => {
         </div>
         <Row className="g-4 mt-2">
           {categories.map((cat) => (
-            <Col key={cat.id} xs={12} sm={6} lg={4}>
+            <Col key={cat._id || cat.id} xs={12} sm={6} lg={4}>
               <NavLink
-                to={`/viewcategory/${cat.id}`}
+                to={`/viewcategory/${cat._id || cat.id}`}
                 className="category-card-link"
               >
                 <article className="category-card">

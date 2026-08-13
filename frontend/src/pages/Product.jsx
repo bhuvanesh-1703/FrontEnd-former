@@ -53,7 +53,7 @@ const Product = () => {
     // Find category IDs that match the search query
     const matchingCategoryIds = categories
       .filter((cat) => cat.category_name.toLowerCase().includes(lowerQuery))
-      .map((cat) => cat.id);
+      .map((cat) => cat._id || cat.id);
 
     const filtered = getProduct.filter((product) => {
       const productNameMatches = product.name
@@ -96,11 +96,12 @@ const Product = () => {
         return;
       }
 
-      const userId = storedUserData._id;
-      const quantity = quantities[product._id] || 1;
+      const userId = storedUserData.id || storedUserData._id;
+      const productId = product._id || product.id;
+      const quantity = quantities[productId] || 1;
       const response = await axios.post(`${API_URL}/api/cart`, {
         userId: userId,
-        productId: product._id,
+        productId: productId,
         quantity: quantity,
       });
 
